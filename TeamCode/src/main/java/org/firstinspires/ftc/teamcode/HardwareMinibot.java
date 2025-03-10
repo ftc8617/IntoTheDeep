@@ -124,7 +124,7 @@ public class HardwareMinibot
         //====== GOBILDA PINPOINT ODOMETRY COMPUTER ======
         // Locate the odometry controller in our hardware settings
         odom = hwMap.get(GoBildaPinpointDriver.class,"odom"); //Control Hub I2C port 3
-        odom.setOffsets(-110.0, -40.0);   // odometry pod x,y locations [mm] relative to center of robot
+        odom.setOffsets(111.23, 36.73);   // odometry pod x,y locations [mm] relative to center of robot
         odom.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD ); // 4bar pods
         odom.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
                                   GoBildaPinpointDriver.EncoderDirection.FORWARD);

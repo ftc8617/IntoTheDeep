@@ -92,8 +92,8 @@ public class TestPinpointOffsets extends LinearOpMode {
         odom = hardwareMap.get(GoBildaPinpointDriver.class,"odom");   // Control Hub I2C port 3
         if( fineTuneOnly ) { // assume we've run this before and only need to fine-tune
            odom.setOffsets(-144.00, +88.00);  // odometry pod x,y offsets relative center of robot
-           startXoffset = -144.00; // mm
-           startYoffset =  +88.00; // mm
+           startXoffset = 111.91; // mm
+           startYoffset =  +36.15; // mm
         } else { // assume we're starting with complete unknowns
            odom.setOffsets( 0.0, 0.0 );       // odometry pod x,y offsets relative center of robot
            startXoffset = 0.0; // mm
@@ -105,10 +105,10 @@ public class TestPinpointOffsets extends LinearOpMode {
         odom.resetPosAndIMU();
 
         // Query hardware info
-        frontLeftMotor  = hardwareMap.get(DcMotorEx.class,"FrontLeft");  // REVERSE
-        frontRightMotor = hardwareMap.get(DcMotorEx.class,"FrontRight"); // forward
-        rearLeftMotor   = hardwareMap.get(DcMotorEx.class,"RearLeft");   // REVERSE
-        rearRightMotor  = hardwareMap.get(DcMotorEx.class,"RearRight");  // forward
+        frontLeftMotor  = hardwareMap.get(DcMotorEx.class,"leftFront");  // REVERSE
+        frontRightMotor = hardwareMap.get(DcMotorEx.class,"rightFront"); // forward
+        rearLeftMotor   = hardwareMap.get(DcMotorEx.class,"leftBack");   // REVERSE
+        rearRightMotor  = hardwareMap.get(DcMotorEx.class,"rightBack");  // forward
 
         // Set motor position-power direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
