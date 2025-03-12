@@ -170,8 +170,10 @@ public class HardwareMinibot
         slideLMotor.setDirection(DcMotor.Direction.FORWARD);
         slideRMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        if(isAutonomous) {
+            slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
 
         slideLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -182,11 +184,13 @@ public class HardwareMinibot
         // Define and initialize the chain motor
         chainMotor  = hwMap.get(DcMotorEx.class,"chainMotor");
         chainMotor.setDirection(DcMotor.Direction.FORWARD);
-        chainMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        chainMotor.setTargetPosition(0);
+        if(isAutonomous) {
+            chainMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            chainMotor.setTargetPosition(0);
+        }
         chainMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         chainMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        chainMotor.setPower(0.0);
+        chainMotor.setPower(0);
 
         // Initialize robot hardware (autonomous=true initializes servos)
         clawServo   = hwMap.get(Servo.class,"claw");            // servo port 0 (Expansion Hub)

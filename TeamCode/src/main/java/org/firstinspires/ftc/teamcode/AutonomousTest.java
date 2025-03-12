@@ -52,13 +52,22 @@ public class AutonomousTest extends AutonomousBase {
      mainAutonomous () {
         driveToPosition(10,0,0,1,1,DRIVE_TO);
         sleep(100);
-        driveToPosition(10,0,90,1,1,DRIVE_TO);
+        driveToPosition(10,0,-90,1,1,DRIVE_TO);
         sleep(100);
-        driveToPosition(10,10,90,1,1,DRIVE_TO);
+        driveToPosition(10,10,-90,1,1,DRIVE_TO);
+        sleep(100);
+        driveToPosition(50,10,120,1,1,DRIVE_TO);
+        sleep(100);
+        driveToPosition(40,20,0,1,1,DRIVE_TO);
+        sleep(100);
+        driveToPosition(0,0,0,1,1,DRIVE_TO);
+        sleep(100);
+        processChain(1,-1000,200);
+
+        sleep(500);
 
 
 
-        sleep(300000);
     } // mainAutonomous
 
     //awesome and cool manipulator functions ------_______----_____ :> peter the programming python disapproves
