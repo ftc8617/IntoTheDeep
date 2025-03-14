@@ -16,8 +16,19 @@ public class AutonomousTest extends AutonomousBase {
 
         // Initialize robot hardware (autonomous mode)
         robot.init(hardwareMap, true);
-        robot.slideLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.slideRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        robot.slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        robot.slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//        robot.slideLMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        robot.slideRMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+//        robot.slideLMotor.setTargetPosition(robot.slideLMotorPos);
+//        robot.slideRMotor.setTargetPosition(robot.slideRMotorPos);
+//        robot.slideLMotor.setPower(0.5);
+//        robot.slideRMotor.setPower(0.5);
+//
+//        robot.diffyLPos = 0.497; robot.diffyLServo.setPosition(robot.diffyLPos);
+//        robot.diffyRPos = 0.500; robot.diffyRServo.setPosition(robot.diffyRPos);
 
         telemetry.addData("State", "B Dawg 😎");
         telemetry.update();
@@ -44,27 +55,37 @@ public class AutonomousTest extends AutonomousBase {
 
         mainAutonomous();
 
-        telemetry.addData("Program", "Complete");
-        telemetry.update();
+        //telemetry.addData("Program", "Complete");
+        //telemetry.update();
+        sleep(3000000);
     } /* runOp */
 
-    public void
-     mainAutonomous () {
-        driveToPosition(10,0,0,1,1,DRIVE_TO);
-        sleep(100);
-        driveToPosition(10,0,-90,1,1,DRIVE_TO);
-        sleep(100);
-        driveToPosition(10,10,-90,1,1,DRIVE_TO);
-        sleep(100);
-        driveToPosition(50,10,120,1,1,DRIVE_TO);
-        sleep(100);
-        driveToPosition(40,20,0,1,1,DRIVE_TO);
-        sleep(100);
-        driveToPosition(0,0,0,1,1,DRIVE_TO);
-        sleep(100);
-        processChain(1,-1000,200);
+    public void mainAutonomous () {
+        herdForwardQuickly( 30, 0, 0, 1 );
 
-        sleep(500);
+
+//        sleep(5000);
+//        robot.slideLMotor.setTargetPosition(-810);
+//        robot.slideRMotor.setTargetPosition(-810);
+//        while (robot.slideRMotorPos>-800 && opModeIsActive()){
+//            robot.readBulkData();
+//            telemetry.addData("Slide ", "%d %d counts", robot.slideLMotorPos,  robot.slideRMotorPos );
+//            telemetry.addData("Chain ", "%d counts", robot.chainMotorPos );
+//            telemetry.update();
+//        }
+//        robot.slideLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        robot.slideRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//        robot.slideLMotor.setPower(0);
+//        robot.slideRMotor.setPower(0);
+//        telemetry.addData("while done", "%d counts", 2);
+//        telemetry.addData("Slide ", "%d %d counts", robot.slideLMotorPos,  robot.slideRMotorPos );
+//        telemetry.addData("Chain ", "%d counts", robot.chainMotorPos );
+//        telemetry.update();
+
+
+
+
 
 
 

@@ -567,11 +567,11 @@ public class Teleop extends LinearOpMode {
         //fix out of bounds
         if (gamepad2.triangle) {
             if (gamepad2.left_stick_y >= 0.15) {
-                robot.chainMotorPos += gamepad2.left_stick_y * 70;
+                robot.chainMotorPos += gamepad2.left_stick_y * 100;
                 robot.chainMotor.setTargetPosition(robot.chainMotorPos);
                 robot.chainMotor.setPower(-1);
             } else if (gamepad2.left_stick_y <= -0.15) {
-                robot.chainMotorPos += gamepad2.left_stick_y * 70;
+                robot.chainMotorPos += gamepad2.left_stick_y * 100;
                 robot.chainMotor.setTargetPosition(robot.chainMotorPos);
                 robot.chainMotor.setPower(-1);
             } else {

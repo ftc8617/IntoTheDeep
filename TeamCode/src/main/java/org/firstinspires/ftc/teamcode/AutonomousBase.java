@@ -241,6 +241,30 @@ public abstract class AutonomousBase extends LinearOpMode {
         }
     } // rotateToAngle
 
+
+    /*---------------------------------------------------------------------------------*/
+    /**
+     * @param angleTarget  - The angle the robot should try to face when reaching destination.
+     * errorMultiplier - The larger this is, the steeper the ramp-down to zero-power as you approach the target position.
+     * allowedError - The smaller this is, the more accurate your stopping point will be, but the more likely you may get
+        overshoot and have to waste time correcting backward.  On the other hand, the larger this is the sooner
+        you'll exit the loop as "done" while still moving at a high speed.
+     * speedMin - this ensure you don't ramp-down the power so much as your distance from the target approaches zero that you
+        don't have enough power to actually move the robot.
+     */
+    public void herdForwardQuickly(double yTarget, double xTarget, double angleTarget, double speedMax ) {
+        double errorMultiplier = 0.08;  // ramp down from 100% to 0% starting at 12" away (12" = 1 / 0.08)
+        double speedMin = 0.06;         // below this power robot won't move
+        double allowedError = 1.5;      // inches (once we're within this distance of our target we're DONE
+        performEveryLoop();
+        // Loop until we get to destination.
+        while(!driveToXY(yTarget, xTarget, angleTarget, speedMin, speedMax, errorMultiplier, allowedError, DRIVE_TO)
+                && opModeIsActive()) {
+            performEveryLoop();
+        }
+    } // herdForwardQuickly
+
+
     /*--------------------------------------------------------------------------------------------*/
     /**
      * @param angleTarget  - The angle the robot should try to face when reaching destination.
