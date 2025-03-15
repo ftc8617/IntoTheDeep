@@ -50,7 +50,7 @@ public class AutonomousBasket extends AutonomousBase {
 
     public void mainAutonomous () {
         // run to basket
-        driveToPosition(-23.3,-16,44.5,1,0.85, DRIVE_TO);
+        herdForwardQuickly(-23.3,-16,44.5,1);
         // slide extension to high basket
         processChain(1,-1656,320);
         robot.slideLMotor.setPower(.75);
@@ -65,7 +65,7 @@ public class AutonomousBasket extends AutonomousBase {
         sleep(50);
 
         // back up and lower slide
-        driveToPosition(-23.3,-16,44.5,1,.85, DRIVE_TO);
+        herdForwardQuickly(-23.3,-16,44.5,1);
         robot.slideLMotor.setPower(-1);
         robot.slideRMotor.setPower(-1);
 
@@ -91,7 +91,7 @@ public class AutonomousBasket extends AutonomousBase {
         robot.slideRMotor.setPower(-1);
 
         // run to basket 2nd time
-        driveToPosition(-23.3,-16,44.5,1,.85, DRIVE_TO);
+        herdForwardQuickly(-23.3,-16,44.5,1);
         processChain(1,-1656,420);
         robot.slideLMotor.setPower(.75);
         robot.slideRMotor.setPower(.75);
@@ -108,7 +108,7 @@ public class AutonomousBasket extends AutonomousBase {
         sleep(50);
 
         // back up and lower slide
-        driveToPosition(-23.3,-16,44.5,1,.85, DRIVE_TO);
+        herdForwardQuickly(-23.3,-16,44.5,1);
         robot.slideLMotor.setPower(-1);
         robot.slideRMotor.setPower(-1);
         sleep(200);
@@ -144,12 +144,12 @@ public class AutonomousBasket extends AutonomousBase {
         sleep(50);
 
         // run closer to basket and score (2nd sample)
-        driveToPosition(-27.7, -11.5, 43.2, 1, .85, DRIVE_TO);
+        herdForwardQuickly(-27.7, -11.5, 43.2, 1);
         processClaw(true);
         sleep(50);
 
         // back up and lower slide (2nd sample)
-        driveToPosition(-23.3,-16,44.5,1,.85, DRIVE_TO);
+        herdForwardQuickly(-23.3,-16,44.5,1);
         robot.slideLMotor.setPower(-1);
         robot.slideRMotor.setPower(-1);
 
@@ -186,12 +186,12 @@ public class AutonomousBasket extends AutonomousBase {
         sleep(25);
 
         // run closer to basket and score (3rd sample)
-        driveToPosition(-27.7, -11.5, 43.2, 1, .65, DRIVE_TO);
+        herdForwardQuickly(-27.7, -11.5, 43.2, 1);
         processClaw(true);
         sleep(50 );
 
         // get everything tight for init in tele
-        driveToPosition(-23.3,-16,44.5,1,.85, DRIVE_TO);
+        herdForwardQuickly(-23.3,-16,44.5,1);
         robot.slideLMotor.setPower(-1);
         robot.slideRMotor.setPower(-1);
         processChain(1,0,0);

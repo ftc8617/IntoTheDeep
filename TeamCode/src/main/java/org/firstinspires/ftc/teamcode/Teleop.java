@@ -61,7 +61,7 @@ public class Teleop extends LinearOpMode {
     Gamepad.RumbleEffect rightDoubleRumble;
 
     /* Declare OpMode members. */
-    HardwareMinibot robot = new HardwareMinibot();
+    HardwareZawg robot = new HardwareZawg();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -173,8 +173,10 @@ public class Teleop extends LinearOpMode {
                     rearLeft,  robot.rearLeftMotorVel,  rearRight,  robot.rearRightMotorVel );
             telemetry.addData("Front", "%d %d counts", robot.frontLeftMotorPos, robot.frontRightMotorPos );
             telemetry.addData("Back ", "%d %d counts", robot.rearLeftMotorPos,  robot.rearRightMotorPos );
-            telemetry.addData("Slide ", "%d %d counts", robot.slideLMotorPos,  robot.slideRMotorPos );
-            telemetry.addData("Chain ", "%d counts", robot.chainMotorPos );
+//          telemetry.addData("Slide ", "%d %d counts", robot.slideLMotorPos,  robot.slideRMotorPos );
+            telemetry.addData("Slide ", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
+//          telemetry.addData("Chain ", "%d counts", robot.chainMotorPos );
+            telemetry.addData("Chain ", "%d counts (%.1f)", robot.chainMotorPos, robot.chainMotor.getPower() );
             telemetry.addData("Claw ", "%.3f counts", robot.clawPos );
             telemetry.addData("Diffy ", "%.3f %.3f counts", robot.diffyLPos, robot.diffyRPos );
             telemetry.addData("CycleTime", "%.1f msec (%.1f Hz)", elapsedTime, elapsedHz );
@@ -505,8 +507,8 @@ public class Teleop extends LinearOpMode {
             }
         }
         else if( (gamepad2.left_bumper) && (robot.slideRMotorPos < 0) ) { //fast movement
-            robot.slideLMotor.setPower(-1);
-            robot.slideRMotor.setPower(-1);
+                robot.slideLMotor.setPower(-1);
+                robot.slideRMotor.setPower(-1);
         }
         else if (gamepad2.right_bumper) { // regular movement???
             if (robot.chainMotorPos > -940 && robot.slideRMotorPos < -1150) {
@@ -517,8 +519,8 @@ public class Teleop extends LinearOpMode {
                 robot.slideLMotor.setPower(.5);
                 robot.slideRMotor.setPower(.5);
             } else if (robot.chainMotorPos < -940) {
-                robot.slideLMotor.setPower(1);
-                robot.slideRMotor.setPower(1);
+                    robot.slideLMotor.setPower(1);
+                    robot.slideRMotor.setPower(1);
             } else if (robot.chainMotorPos > -940 && robot.slideRMotorPos > -1150) {
                 robot.slideLMotor.setPower(1);
                 robot.slideRMotor.setPower(1);
@@ -530,14 +532,20 @@ public class Teleop extends LinearOpMode {
         }
         else {
             //precision movement
-            if( (gamepad2.left_trigger >= 0.15) && (robot.slideRMotorPos < 0) ){
-                robot.slideLMotor.setPower(-1.3*(gamepad2.left_trigger));
-                robot.slideRMotor.setPower(-1.3*(gamepad2.left_trigger));
-
+            if( (gamepad2.left_trigger >= 0.1) && (robot.slideRMotorPos < 0) ){
+                if(gamepad2.left_trigger>=0.1 && gamepad2.left_trigger<= 0.3) {
+                    robot.slideLMotor.setPower(0.5*(gamepad2.left_trigger));
+                    robot.slideRMotor.setPower(0.5*(gamepad2.left_trigger));
+                } else {
+                    double motorPower = -1.3 * gamepad2.left_trigger;
+                    if (motorPower < -1.0) motorPower = -1.0;
+                    robot.slideLMotor.setPower(motorPower);
+                    robot.slideRMotor.setPower(motorPower);
+                }
             }
-            else if ( (gamepad2.right_trigger >= 0.15) ){
+            else if ( (gamepad2.right_trigger >= 0.10) ){
 
-                if (robot.chainMotorPos > -940 && robot.slideRMotorPos < -1150) {
+                if (robot.chainMotorPos >= -940 && robot.slideRMotorPos < -1150) {
                     robot.slideLMotor.setPower(0);
                     robot.slideRMotor.setPower(0);
                     gamepad2.runRumbleEffect(shortRumble);
@@ -545,8 +553,13 @@ public class Teleop extends LinearOpMode {
                     robot.slideLMotor.setPower(.5*(gamepad2.right_trigger));
                     robot.slideRMotor.setPower(.5*(gamepad2.right_trigger));
                 } else if (robot.chainMotorPos < -940) {
-                    robot.slideLMotor.setPower(1*(gamepad2.right_trigger));
-                    robot.slideRMotor.setPower(1*(gamepad2.right_trigger));
+                    if(gamepad2.right_trigger>=0.1 && gamepad2.right_trigger<= 0.3) {
+                        robot.slideLMotor.setPower(0.5*(gamepad2.right_trigger));
+                        robot.slideRMotor.setPower(0.5*(gamepad2.right_trigger));
+                    } else {
+                        robot.slideLMotor.setPower(1 * (gamepad2.right_trigger));
+                        robot.slideRMotor.setPower(1 * (gamepad2.right_trigger));
+                    }
                 } else if (robot.chainMotorPos > -940 && robot.slideRMotorPos > -1150) {
                     robot.slideLMotor.setPower(1*(gamepad2.right_trigger));
                     robot.slideRMotor.setPower(1*(gamepad2.right_trigger));
@@ -559,6 +572,15 @@ public class Teleop extends LinearOpMode {
             else {
                 robot.slideLMotor.setPower(0);
                 robot.slideRMotor.setPower(0);
+            }
+        }
+        if(gamepad2.cross) {
+            if (robot.slideRMotorPos > -1000){
+                robot.slideLMotor.setPower(0.055);
+                robot.slideRMotor.setPower(0.055);
+            } else {
+                robot.slideLMotor.setPower(0.07);
+                robot.slideRMotor.setPower(0.07);
             }
         }
     } // processLift

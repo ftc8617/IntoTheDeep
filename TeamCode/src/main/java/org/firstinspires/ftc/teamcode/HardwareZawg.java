@@ -2,17 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 import static java.lang.Thread.sleep;
 
-import android.os.Environment;
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -25,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 /*
  * Hardware class for goBilda robot (12"x15" chassis with 96mm/3.8" goBilda mecanum wheels)
  */
-public class HardwareMinibot
+public class HardwareZawg
 {
     //====== REV CONTROL/EXPANSION HUBS =====
     LynxModule controlHub;
@@ -103,7 +98,7 @@ public class HardwareMinibot
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwareMinibot(){
+    public HardwareZawg(){
     }
 
     /* Initialize standard Hardware interfaces */
@@ -178,6 +173,9 @@ public class HardwareMinibot
         slideLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        slideLMotor.setPower(0);
+        slideRMotor.setPower(0);
+
         slideLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -187,6 +185,8 @@ public class HardwareMinibot
         if(isAutonomous) {
             chainMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             chainMotor.setTargetPosition(0);
+        } else {
+            chainMotor.setTargetPosition(chainMotorPos);
         }
         chainMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         chainMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -216,6 +216,10 @@ public class HardwareMinibot
        diffyLPos = 0.846;    diffyLServo.setPosition(diffyLPos);
        diffyRPos = 0.202;    diffyRServo.setPosition(diffyRPos);
        clawOpen = false;
+       chainMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
     } // resetEncoders
 
     /*--------------------------------------------------------------------------------------------*/
