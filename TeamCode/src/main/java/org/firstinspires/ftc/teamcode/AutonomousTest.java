@@ -16,17 +16,16 @@ public class AutonomousTest extends AutonomousBase {
 
         // Initialize robot hardware (autonomous mode)
         robot.init(hardwareMap, true);
-//        robot.slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        robot.slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//        robot.slideLMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        robot.slideRMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//
-//        robot.slideLMotor.setTargetPosition(robot.slideLMotorPos);
-//        robot.slideRMotor.setTargetPosition(robot.slideRMotorPos);
-//        robot.slideLMotor.setPower(0.5);
-//        robot.slideRMotor.setPower(0.5);
-//
+        robot.slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.slideLMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.slideRMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        robot.slideLMotor.setTargetPosition(robot.slideLMotorPos);
+        robot.slideRMotor.setTargetPosition(robot.slideRMotorPos);
+        robot.slideLMotor.setPower(0.5);
+        robot.slideRMotor.setPower(0.5);
 //        robot.diffyLPos = 0.497; robot.diffyLServo.setPosition(robot.diffyLPos);
 //        robot.diffyRPos = 0.500; robot.diffyRServo.setPosition(robot.diffyRPos);
 
@@ -49,6 +48,8 @@ public class AutonomousTest extends AutonomousBase {
                     robot.clawServo.setPosition(robot.clawPos);
                 }
             } //  gamepad1_r_bumper
+            telemetry.addData("Slide", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
+            telemetry.update();
             // Pause briefly before looping
             idle();
         } // !isStarted
@@ -57,12 +58,20 @@ public class AutonomousTest extends AutonomousBase {
 
         //telemetry.addData("Program", "Complete");
         //telemetry.update();
+        while(opModeIsActive()) {
+            robot.readBulkData();
+            telemetry.addData("Slide tgt", "%d %d cts ", robot.slideLMotor.getTargetPosition(),  robot.slideRMotor.getTargetPosition() );
+            telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
+            telemetry.update();
+        }
         sleep(3000000);
     } /* runOp */
 
     public void mainAutonomous () {
-        herdForwardQuickly( 30, 0, 0, 1 );
-
+       // herdForwardQuickly( 30, 0, 0, 1 );
+    processChain(1,-1600,500);
+        robot.slideLMotor.setTargetPosition(-810);
+        robot.slideRMotor.setTargetPosition(-810);
 
 //        sleep(5000);
 //        robot.slideLMotor.setTargetPosition(-810);
