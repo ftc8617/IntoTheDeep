@@ -70,8 +70,16 @@ public class AutonomousTest extends AutonomousBase {
     public void mainAutonomous () {
        // herdForwardQuickly( 30, 0, 0, 1 );
     processChain(1,-1600,500);
-        robot.slideLMotor.setTargetPosition(-810);
-        robot.slideRMotor.setTargetPosition(-810);
+
+        robot.autoSlidePositionStart(510,0.5);
+
+        while (opModeIsActive()){
+            robot.readBulkData();
+            robot.autoSlidePositionUpdate();
+            telemetry.addData("Slide Error", "%d %d cts", robot.positionLError,  robot.positionRError);
+            telemetry.update();
+        }
+
 
 //        sleep(5000);
 //        robot.slideLMotor.setTargetPosition(-810);

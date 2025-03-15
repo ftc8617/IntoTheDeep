@@ -70,15 +70,18 @@ public class HardwareZawg
     protected double COUNTS_PER_INCH2      = 1738.4;  // 8192 counts-per-rev / (1.5" omni wheel * PI)
 
     protected DcMotorEx slideLMotor     = null;
-    public int          slideLMotorTgt  = 0;       // EH1
     public int          slideLMotorPos  = 0;       // EH1
     public double       slideLMotorVel  = 0.0;     // EH1
 
     protected DcMotorEx slideRMotor     = null;
-    public int          slideRMotorTgt  = 0;       // EH2
     public int          slideRMotorPos  = 0;       // EH2
     public double       slideRMotorVel  = 0.0;     // EH2
 
+    public int          slideMotorTgt  = 0;       // EH1
+    public boolean      slideMotorAuto = false;
+    public boolean      slideMotorBusy = false;
+    public int positionLError;
+    public int positionRError;
     protected DcMotorEx chainMotor     = null;
     public int          chainMotorTgt  = 0;       // EH0
     public int          chainMotorPos  = 0;       // EH0
@@ -162,8 +165,8 @@ public class HardwareZawg
         slideLMotor  = hwMap.get(DcMotorEx.class,"leftSlideMotor");
         slideRMotor  = hwMap.get(DcMotorEx.class,"rightSlideMotor");
 
-        slideLMotor.setDirection(DcMotor.Direction.FORWARD);
-        slideRMotor.setDirection(DcMotor.Direction.REVERSE);
+        slideLMotor.setDirection(DcMotor.Direction.REVERSE);
+        slideRMotor.setDirection(DcMotor.Direction.FORWARD);
 
         if(isAutonomous) {
             slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -276,6 +279,26 @@ public class HardwareZawg
         controlHubV = controlHub.getInputVoltage( VoltageUnit.MILLIVOLTS );
         return controlHubV;
     } // readBatteryControlHub
+
+
+    /*--------------------------------------------------------------------------------------------*/
+    public void autoSlidePositionStart( int targetPos, double movePower )
+    {
+        // Save the target position
+        slideMotorTgt = targetPos;
+        slideMotorAuto = true;
+        slideMotorBusy = true;
+    } // autoSlidePositionStart
+    public void autoSlidePositionAbort()
+    {
+        slideMotorAuto = false;
+        slideMotorBusy = false;
+    } // autoSlidePositionAbort
+    public void autoSlidePositionUpdate()
+    {
+        positionLError = slideMotorTgt - slideLMotorPos;
+        positionRError = slideMotorTgt - slideRMotorPos;
+    } // autoSlidePositionUpdate
 
     /*--------------------------------------------------------------------------------------------*/
     public void driveTrainMotors( double frontLeft, double frontRight, double rearLeft, double rearRight )
