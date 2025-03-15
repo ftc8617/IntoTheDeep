@@ -16,16 +16,7 @@ public class AutonomousTest extends AutonomousBase {
 
         // Initialize robot hardware (autonomous mode)
         robot.init(hardwareMap, true);
-        robot.slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.slideLMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.slideRMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        robot.slideLMotor.setTargetPosition(robot.slideLMotorPos);
-        robot.slideRMotor.setTargetPosition(robot.slideRMotorPos);
-        robot.slideLMotor.setPower(0.5);
-        robot.slideRMotor.setPower(0.5);
 //        robot.diffyLPos = 0.497; robot.diffyLServo.setPosition(robot.diffyLPos);
 //        robot.diffyRPos = 0.500; robot.diffyRServo.setPosition(robot.diffyRPos);
 
@@ -48,8 +39,6 @@ public class AutonomousTest extends AutonomousBase {
                     robot.clawServo.setPosition(robot.clawPos);
                 }
             } //  gamepad1_r_bumper
-            telemetry.addData("Slide", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
-            telemetry.update();
             // Pause briefly before looping
             idle();
         } // !isStarted
