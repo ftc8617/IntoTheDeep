@@ -282,7 +282,7 @@ public class HardwareZawg
 
 
     /*--------------------------------------------------------------------------------------------*/
-    public void autoSlidePositionStart( int targetPos, double movePower )
+    public void autoSlidePositionStart( int targetPos )
     {
         // Save the target position
         slideMotorTgt = targetPos;
@@ -296,27 +296,34 @@ public class HardwareZawg
     } // autoSlidePositionAbort
     public void autoSlidePositionUpdate()
     {
-        double motorPower;
-        // How far are we from the desired tartget?
-        positionLError = slideMotorTgt - slideLMotorPos;
-        positionRError = slideMotorTgt - slideRMotorPos;
-        int minPositionError = Math.min( positionLError, positionRError );
+        if (slideMotorAuto) {
+            double motorPower;
+            // How far are we from the desired tartget?
+            positionLError = slideMotorTgt - slideLMotorPos;
+            positionRError = slideMotorTgt - slideRMotorPos;
+            int minPositionError = Math.min(positionLError, positionRError);
 
-        // What motor power should we use to get there?
-        if( minPositionError > 200 ) {
-            motorPower = 0.75; // large positive error
-        } else if( minPositionError > 25 ) {
-            motorPower = 0.25; // small positive error (almost there)
-        } else if( minPositionError < -25 ) {
-            motorPower = -0.25; // small negative error (almost there)
-        } else if( minPositionError < -200 ) {
-            motorPower = -0.75; // small negative error (almost there)
-        } else {
-            motorPower = 0.0; // within -25 to +25 is considered DONE
+            // What motor power should we use to get there?
+            if (minPositionError > 600) {
+                motorPower = -0.05; // large positive error, go fast
+            } else if (minPositionError > 300) {
+                motorPower = -0.03; // approaching from positive (slow down)
+            } else if (minPositionError > 25) {
+                motorPower = -0.025; // achieve DONE from slow power
+            } else if ((minPositionError <= 25) && (minPositionError >= -25) ) {
+                motorPower = 0.0; // within -25 to +25 is considered DONE
+                slideMotorBusy = false;
+                slideMotorAuto = false;
+            } else if (minPositionError > -300) {
+                motorPower = 0.05; // same logic, but in reverse for NEGATIVE errors
+            } else if (minPositionError > -600) {
+                motorPower = 0.07;
+            } else { // above -600 negative, go fast
+                motorPower = 0.10;
+            }
+            slideLMotor.setPower(motorPower);
+            slideRMotor.setPower(motorPower);
         }
-
-        slideLMotor.setPower(motorPower);
-        slideRMotor.setPower(motorPower);
     } // autoSlidePositionUpdate
 
     /*--------------------------------------------------------------------------------------------*/

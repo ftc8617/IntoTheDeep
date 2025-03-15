@@ -49,8 +49,7 @@ public class AutonomousTest extends AutonomousBase {
         //telemetry.update();
         while(opModeIsActive()) {
             robot.readBulkData();
-            telemetry.addData("Slide tgt", "%d %d cts ", robot.slideLMotor.getTargetPosition(),  robot.slideRMotor.getTargetPosition() );
-            telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
+            telemetry.addData("Slide", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
             telemetry.update();
         }
         sleep(3000000);
@@ -60,42 +59,31 @@ public class AutonomousTest extends AutonomousBase {
        // herdForwardQuickly( 30, 0, 0, 1 );
     processChain(1,-1600,500);
 
-        robot.autoSlidePositionStart(510,0.5);
+        robot.autoSlidePositionStart(1000 );
 
-        while (opModeIsActive()){
+        while (opModeIsActive() && robot.slideMotorBusy ){
             robot.readBulkData();
             robot.autoSlidePositionUpdate();
+            telemetry.addData("Slide Busy", robot.slideMotorBusy);
+            telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
             telemetry.addData("Slide Error", "%d %d cts", robot.positionLError,  robot.positionRError);
             telemetry.update();
         }
 
+        sleep(1000);
 
-//        sleep(5000);
-//        robot.slideLMotor.setTargetPosition(-810);
-//        robot.slideRMotor.setTargetPosition(-810);
-//        while (robot.slideRMotorPos>-800 && opModeIsActive()){
-//            robot.readBulkData();
-//            telemetry.addData("Slide ", "%d %d counts", robot.slideLMotorPos,  robot.slideRMotorPos );
-//            telemetry.addData("Chain ", "%d counts", robot.chainMotorPos );
-//            telemetry.update();
-//        }
-//        robot.slideLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        robot.slideRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//
-//        robot.slideLMotor.setPower(0);
-//        robot.slideRMotor.setPower(0);
-//        telemetry.addData("while done", "%d counts", 2);
-//        telemetry.addData("Slide ", "%d %d counts", robot.slideLMotorPos,  robot.slideRMotorPos );
-//        telemetry.addData("Chain ", "%d counts", robot.chainMotorPos );
-//        telemetry.update();
+        robot.autoSlidePositionStart(800 );
 
+        while (opModeIsActive() && robot.slideMotorBusy ){
+            robot.readBulkData();
+            robot.autoSlidePositionUpdate();
+            telemetry.addData("Slide Busy", robot.slideMotorBusy);
+            telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
+            telemetry.addData("Slide Error", "%d %d cts", robot.positionLError,  robot.positionRError);
+            telemetry.update();
+        }
 
-
-
-
-
-
-    } // mainAutonomous
+     } // mainAutonomous
 
     //awesome and cool manipulator functions ------_______----_____ :> peter the programming python disapproves
     public void processWrist (double left, double right, int preset) {
