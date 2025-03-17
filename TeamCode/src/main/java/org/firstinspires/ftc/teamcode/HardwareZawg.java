@@ -223,6 +223,10 @@ public class HardwareZawg
        slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        chainMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slideLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     } // resetEncoders
 
     /*--------------------------------------------------------------------------------------------*/
