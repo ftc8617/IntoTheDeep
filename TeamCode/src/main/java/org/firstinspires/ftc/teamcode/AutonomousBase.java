@@ -6,12 +6,28 @@ import static java.lang.Math.toRadians;
 import android.os.SystemClock;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 public abstract class AutonomousBase extends LinearOpMode {
+
+    static final double  DRIVE_SPEED_20       = 0.20;    // Lower speed for moving from a standstill
+    static final double  DRIVE_SPEED_30       = 0.30;    // Lower speed for fine control going sideways
+    static final double  DRIVE_SPEED_50       = 0.50;    //
+    static final double  DRIVE_SPEED_55       = 0.55;    //
+    static final double  DRIVE_SPEED_70       = 0.70;    //
+    static final double  DRIVE_SPEED_100      = 1.00;    //
+    static final double  TURN_SPEED_20        = 0.15;    //
+    static final double  TURN_SPEED_30        = 0.30;    //
+    static final double  TURN_SPEED_40        = 0.40;    //
+    static final double  TURN_SPEED_50        = 0.50;    //
+    static final double  TURN_SPEED_60        = 0.60;    //
+    static final double  TURN_SPEED_70        = 0.70;    //
+    static final double  TURN_SPEED_80        = 0.80;    //
+    static final double  TURN_SPEED_100       = 1.00;    //
 
     // Define our hardware class here (so it's available in every Autonomous program we write
     HardwareZawg robot = new HardwareZawg();
@@ -34,6 +50,7 @@ public abstract class AutonomousBase extends LinearOpMode {
     double pos_y = 0, pos_x = 0, pos_angle = 0.0;  // Allows us to specify movement INCREMENTALLY, not ABSOLUTE
     static final int DRIVE_TO = 1;   // ACCURACY: tighter tolerances, and slows then stops at final position
     static final int DRIVE_THRU = 2;   // SPEED: looser tolerances, and leave motors running (ready for next command)
+    ElapsedTime motionTimer = new ElapsedTime();  // for driving
 
     public void performEveryLoop () {
         // Get updated motor encoder values (in a single transaction)
@@ -88,6 +105,38 @@ public abstract class AutonomousBase extends LinearOpMode {
         gamepad1_dpad_left_last  = gamepad1_dpad_left_now;   gamepad1_dpad_left_now  = gamepad1.dpad_left;
         gamepad1_dpad_right_last = gamepad1_dpad_right_now;  gamepad1_dpad_right_now = gamepad1.dpad_right;
     } // captureGamepad1Buttons
+
+    //============================ TIME-BASED NAVIGATION FUNCTIONS ============================
+
+    /*---------------------------------------------------------------------------------------------
+     * Method will drive straight for a specified time.
+     * @param speed  Speed to set all motors, positive forward, negative backward
+     * @param time   How long to drive (milliseconds)
+     */
+    public void timeDriveStraight( double speed, int time ) {
+        motionTimer.reset();
+        robot.driveTrainMotors(speed, speed, speed, speed);
+        while(opModeIsActive() && (motionTimer.milliseconds() <= time)) {
+            performEveryLoop();
+        }
+        robot.stopMotion();
+    } // timeDriveStraight
+
+    /*---------------------------------------------------------------------------------------------
+     * Method will strafe straight for a specified time.
+     * @param speed  Speed to set all motors, postive strafe left, negative strafe right
+     * @param time   How long to strafe (milliseconds)
+     */
+    public void timeDriveStrafe( double speed, int time ) {
+        motionTimer.reset();
+        robot.driveTrainMotors(-speed, speed, speed, -speed);
+        while(opModeIsActive() && (motionTimer.milliseconds() <= time)) {
+            performEveryLoop();
+        }
+        robot.stopMotion();
+    } // timeDriveStrafe
+
+    //============================ ODOMETRY-BASED NAVIGATION FUNCTIONS ============================
 
     /*--------------------------------------------------------------------------------------------*/
     /**
