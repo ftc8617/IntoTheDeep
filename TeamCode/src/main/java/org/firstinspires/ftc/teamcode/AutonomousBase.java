@@ -30,7 +30,7 @@ public abstract class AutonomousBase extends LinearOpMode {
     static final double  TURN_SPEED_100       = 1.00;    //
 
     // Define our hardware class here (so it's available in every Autonomous program we write
-    HardwareZawg robot = new HardwareZawg();
+    HardwareZawg2 robot = new HardwareZawg2();
 
     // gamepad controls for changing autonomous options
     boolean gamepad1_circle_last,   gamepad1_circle_now  =false;
