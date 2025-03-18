@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="Autonomous Basket", group="8617", preselectTeleOp = "Teleop")
 public class AutonomousBasket extends AutonomousBase {
-
-    HardwareZawg2 robot = new HardwareZawg2();
+    boolean debugMode = true;
     boolean autoRunning = false;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -23,6 +22,8 @@ public class AutonomousBasket extends AutonomousBase {
 
         telemetry.addData("State", "B Dawg 😎");
         telemetry.update();
+
+        //determines if we print telemetry values during lift operations
 
         while (!isStarted()) {
             robot.clawPos = 0.565;
@@ -94,22 +95,24 @@ public class AutonomousBasket extends AutonomousBase {
         }
     }
 
-    public void processLift (int leftPos, int rightPos, double power, int preset) {
-        if (preset == 0) { // custom
+    public void processLift (int targetPos, double hold) {
 
-        }
-        else if (preset == 1) { // extend to high basket
+        robot.autoSlidePositionStart(targetPos);
 
-        }
-        else if (preset == 2) { // extend to low basket
+        while (opModeIsActive() && robot.slideMotorBusy ){
+            robot.readBulkData();
+            robot.autoSlidePositionUpdate();
 
+            if(debugMode) {
+                telemetry.addData("Slide Busy", robot.slideMotorBusy);
+                telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos, robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower());
+                telemetry.addData("Slide Error", "%d %d cts", robot.positionLError, robot.positionRError);
+                telemetry.update();
+            }
         }
-        else if (preset == 3) { // lower slides
 
-        }
-        else { //
-
-        }
+        robot.slideLMotor.setPower(hold);
+        robot.slideRMotor.setPower(hold);
     }
 
     public void processChain (double power, int target, int wait) {
@@ -129,21 +132,21 @@ public class AutonomousBasket extends AutonomousBase {
     }
 
     public void scoreHighBasket () {
-        processChain(-0.3, -1655, 0);
+        processChain(1, -1655, 0);
         processWrist(0.434, 0.195, 2);
         driveToPosition(-25, -6.9, 45, 0.6, 0.5, DRIVE_TO);
         sleep(200);
         //processlift
-        robot.autoSlidePositionStart(2500 );
+        processLift(2400,0.08);
         sleep(200);
-        processWrist(0.506, 0.110, 0);
+        processWrist(0.506, 0.110, 1);
         sleep(200);
         driveToPosition(-26.4, -5.6, 45, 0.6, 0.5, DRIVE_TO);
         sleep(200);
         processClaw(true);
         driveToPosition(-25, -6.9, 45, 0.6, 0.5, DRIVE_TO);
         sleep(200);
-        robot.autoSlidePositionStart(0);
+        processLift(0,0);
     }
 
 
