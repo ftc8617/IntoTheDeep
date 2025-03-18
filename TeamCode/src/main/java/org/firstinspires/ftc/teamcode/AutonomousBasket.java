@@ -56,6 +56,10 @@ public class AutonomousBasket extends AutonomousBase {
         scoreHighBasket();
 
         // collect first intake
+        //intake1stSpike();
+        driveToPosition(-17.1,-13.9,86.6,1,1, DRIVE_TO);
+
+        scoreHighBasket();
 
         // collect second intake
 
@@ -95,17 +99,17 @@ public class AutonomousBasket extends AutonomousBase {
         }
     }
 
-    public void processLift (int targetPos, double hold) {
+    public void processLift (int targetPos, double speedMultiplier, double initialSpeedMultiplier, double hold) {
 
         robot.autoSlidePositionStart(targetPos);
 
         while (opModeIsActive() && robot.slideMotorBusy ){
             robot.readBulkData();
-            robot.autoSlidePositionUpdate();
+            robot.autoSlidePositionUpdate(speedMultiplier, initialSpeedMultiplier);
 
             if(debugMode) {
                 telemetry.addData("Slide Busy", robot.slideMotorBusy);
-                telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos, robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower());
+                telemetry.addData("Slide Position", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos, robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower());
                 telemetry.addData("Slide Error", "%d %d cts", robot.positionLError, robot.positionRError);
                 telemetry.update();
             }
@@ -135,9 +139,9 @@ public class AutonomousBasket extends AutonomousBase {
         processChain(1, -1655, 0);
         processWrist(0.434, 0.195, 2);
         driveToPosition(-25, -6.9, 45, 0.6, 0.5, DRIVE_TO);
-        sleep(200);
-        //processlift
-        processLift(2400,0.08);
+        robot.slideLMotor.setPower(0);
+        robot.slideRMotor.setPower(0);
+        processLift(2200,1.5,2,-0.07);
         sleep(200);
         processWrist(0.506, 0.110, 1);
         sleep(200);
@@ -145,10 +149,30 @@ public class AutonomousBasket extends AutonomousBase {
         sleep(200);
         processClaw(true);
         driveToPosition(-25, -6.9, 45, 0.6, 0.5, DRIVE_TO);
-        sleep(200);
-        processLift(0,0);
+        sleep(50);
+        robot.slideLMotor.setPower(1);
+        robot.slideRMotor.setPower(1);
+        sleep(250);
+        processChain(1,-273,0);
+        processWrist(0.497,0.5,0);
     }
 
+    public void intake1stSpike () {
+        driveToPosition(-17.1,-13.9,86.6,1,1, DRIVE_TO);
+        robot.slideLMotor.setPower(0);
+        robot.slideRMotor.setPower(0);
+        processChain(1,-213, 50);
+        processLift(1080,0.6,0.8,0);
+        sleep(100);
+        processWrist(0.207,0.801,0);
+        sleep(100);
+        processClaw(false);
+        processChain(1,-273,0);
+
+        robot.slideLMotor.setPower(1);
+        robot.slideRMotor.setPower(1);
+        sleep(200);
+    }
 
 
     //lame navigation functions boooooooo >:(

@@ -84,6 +84,7 @@ public class HardwareZawg2
     public boolean      slideMotorBusy = false;
     public int positionLError;
     public int positionRError;
+
     protected DcMotorEx chainMotor     = null;
     public int          chainMotorTgt  = 0;       // EH0
     public int          chainMotorPos  = 0;       // EH0
@@ -302,7 +303,7 @@ public class HardwareZawg2
         slideMotorAuto = false;
         slideMotorBusy = false;
     } // autoSlidePositionAbort
-    public void autoSlidePositionUpdate()
+    public void autoSlidePositionUpdate(double speedMultiplier, double initialSpeedMultiplier)
     {
         if (slideMotorAuto) {
             double motorPower;
@@ -312,22 +313,22 @@ public class HardwareZawg2
             int minPositionError = Math.min(positionLError, positionRError);
 
             // What motor power should we use to get there?
-            if (minPositionError > 600) {
-                motorPower = -0.05; // large positive error, go fast
+            if (minPositionError > 600) { //up
+                motorPower = -0.05 * initialSpeedMultiplier; // large positive error, go fast
             } else if (minPositionError > 300) {
-                motorPower = -0.03; // approaching from positive (slow down)
+                motorPower = -0.03 * speedMultiplier; // approaching from positive (slow down)
             } else if (minPositionError > 25) {
-                motorPower = -0.025; // achieve DONE from slow power
+                motorPower = -0.025 * speedMultiplier; // achieve DONE from slow power
             } else if ((minPositionError <= 25) && (minPositionError >= -25) ) {
                 motorPower = 0.0; // within -25 to +25 is considered DONE
                 slideMotorBusy = false;
                 slideMotorAuto = false;
-            } else if (minPositionError > -300) {
-                motorPower = 0.05; // same logic, but in reverse for NEGATIVE errors
+            } else if (minPositionError > -300) { //down
+                motorPower = 0.05 * speedMultiplier; // same logic, but in reverse for NEGATIVE errors
             } else if (minPositionError > -600) {
-                motorPower = 0.07;
+                motorPower = 0.07 * speedMultiplier;
             } else { // above -600 negative, go fast
-                motorPower = 0.10;
+                motorPower = 0.10 * initialSpeedMultiplier;
             }
             slideLMotor.setPower(motorPower);
             slideRMotor.setPower(motorPower);

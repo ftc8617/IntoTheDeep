@@ -62,7 +62,7 @@ public class AutonomousTestZawg2 extends AutonomousBase {
 
         while (opModeIsActive() && robot.slideMotorBusy ){
             robot.readBulkData();
-            robot.autoSlidePositionUpdate();
+            //robot.autoSlidePositionUpdate();
             telemetry.addData("Slide Busy", robot.slideMotorBusy);
             telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
             telemetry.addData("Slide Error", "%d %d cts", robot.positionLError,  robot.positionRError);
@@ -76,7 +76,7 @@ public class AutonomousTestZawg2 extends AutonomousBase {
 
         while (opModeIsActive() && robot.slideMotorBusy ){
             robot.readBulkData();
-            robot.autoSlidePositionUpdate();
+            //robot.autoSlidePositionUpdate();
             telemetry.addData("Slide Busy", robot.slideMotorBusy);
             telemetry.addData("Slide pos", "%d %d cts (%.4f %.4f)", robot.slideLMotorPos,  robot.slideRMotorPos, robot.slideLMotor.getPower(), robot.slideRMotor.getPower() );
             telemetry.addData("Slide Error", "%d %d cts", robot.positionLError,  robot.positionRError);
