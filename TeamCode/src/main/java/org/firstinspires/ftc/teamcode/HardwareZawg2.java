@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -229,8 +230,12 @@ public class HardwareZawg2
        diffyRPos = 0.202;    diffyRServo.setPosition(diffyRPos);
        clawOpen = false;
        chainMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       chainMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        slideLMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       slideLMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
        slideRMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       slideRMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
     } // resetEncoders
 
@@ -314,21 +319,21 @@ public class HardwareZawg2
 
             // What motor power should we use to get there?
             if (minPositionError > 600) { //up
-                motorPower = -0.05 * initialSpeedMultiplier; // large positive error, go fast
+                motorPower = 0.5 * initialSpeedMultiplier; // large positive error, go fast
             } else if (minPositionError > 300) {
-                motorPower = -0.03 * speedMultiplier; // approaching from positive (slow down)
+                motorPower = 0.3 * speedMultiplier; // approaching from positive (slow down)
             } else if (minPositionError > 25) {
-                motorPower = -0.025 * speedMultiplier; // achieve DONE from slow power
+                motorPower = 0.15 * speedMultiplier; // achieve DONE from slow power
             } else if ((minPositionError <= 25) && (minPositionError >= -25) ) {
                 motorPower = 0.0; // within -25 to +25 is considered DONE
                 slideMotorBusy = false;
                 slideMotorAuto = false;
             } else if (minPositionError > -300) { //down
-                motorPower = 0.05 * speedMultiplier; // same logic, but in reverse for NEGATIVE errors
+                motorPower = -0.05 * speedMultiplier; // same logic, but in reverse for NEGATIVE errors
             } else if (minPositionError > -600) {
-                motorPower = 0.07 * speedMultiplier;
+                motorPower = -0.07 * speedMultiplier;
             } else { // above -600 negative, go fast
-                motorPower = 0.10 * initialSpeedMultiplier;
+                motorPower = -0.10 * initialSpeedMultiplier;
             }
             slideLMotor.setPower(motorPower);
             slideRMotor.setPower(motorPower);

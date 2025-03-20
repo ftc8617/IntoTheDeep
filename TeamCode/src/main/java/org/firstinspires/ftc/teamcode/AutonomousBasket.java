@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name="Autonomous Basket", group="8617", preselectTeleOp = "Teleop")
 public class AutonomousBasket extends AutonomousBase {
     boolean debugMode = true;
+
+    boolean done = false;
     boolean autoRunning = false;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -23,8 +25,7 @@ public class AutonomousBasket extends AutonomousBase {
         telemetry.addData("State", "B Dawg 😎");
         telemetry.update();
 
-        //determines if we print telemetry values during lift operations
-
+        // determines if we print telemetry values during lift operations
         while (!isStarted()) {
             robot.clawPos = 0.565;
             // Check for operator input that changes Autonomous options
@@ -56,15 +57,17 @@ public class AutonomousBasket extends AutonomousBase {
         scoreHighBasket();
 
         // collect first intake
-        //intake1stSpike();
-        driveToPosition(-17.1,-13.9,86.6,1,1, DRIVE_TO);
-
+        intake1stSpike();
         scoreHighBasket();
 
         // collect second intake
+        intake2ndSpike();
+        scoreHighBasket();
 
         // collect third intake
-
+        intake3rdSpike();
+        done = true;
+        scoreHighBasket();
 
         sleep(30000000);
 
@@ -138,43 +141,87 @@ public class AutonomousBasket extends AutonomousBase {
     public void scoreHighBasket () {
         processChain(1, -1655, 0);
         processWrist(0.434, 0.195, 2);
-        driveToPosition(-25, -6.9, 45, 0.6, 0.5, DRIVE_TO);
-        robot.slideLMotor.setPower(0);
-        robot.slideRMotor.setPower(0);
-        processLift(2200,1.5,2,-0.07);
-        sleep(200);
-        processWrist(0.506, 0.110, 1);
-        sleep(200);
-        driveToPosition(-26.4, -5.6, 45, 0.6, 0.5, DRIVE_TO);
-        sleep(200);
-        processClaw(true);
-        driveToPosition(-25, -6.9, 45, 0.6, 0.5, DRIVE_TO);
-        sleep(50);
+        driveToPosition(-25, -6.9, 45, 1, 1, DRIVE_TO);
         robot.slideLMotor.setPower(1);
         robot.slideRMotor.setPower(1);
-        sleep(250);
-        processChain(1,-273,0);
-        processWrist(0.497,0.5,0);
-    }
+        processLift(2200,2,2.5,0.07);
+        processWrist(0.506, 0.110, 1);
+        veryErrorProne(-26.4, -5.6, 45, .5);
+        sleep(100);
+        processClaw(true);
+        sleep(75);
+        if (done) {
+            //processChain(.75, -273, 0);
+            ascentPark();
+        }
+        else {
+            driveToPosition(-25, -6.9, 45, 1, 1, DRIVE_THRU);
+        }
+        robot.slideLMotor.setPower(-1);
+        robot.slideRMotor.setPower(-1);
+        processWrist(0.497, 0.5, 0);
+    } // scoreHighBasket
 
     public void intake1stSpike () {
         driveToPosition(-17.1,-13.9,86.6,1,1, DRIVE_TO);
         robot.slideLMotor.setPower(0);
         robot.slideRMotor.setPower(0);
-        processChain(1,-213, 50);
-        processLift(1080,0.6,0.8,0);
+        processChain(1,-200, 50);
+        processLift(1080,2,3,0);
         sleep(100);
         processWrist(0.207,0.801,0);
         sleep(100);
         processClaw(false);
+        sleep(70);
         processChain(1,-273,0);
 
-        robot.slideLMotor.setPower(1);
-        robot.slideRMotor.setPower(1);
+        robot.slideLMotor.setPower(-1);
+        robot.slideRMotor.setPower(-1);
+        sleep(250);
+    }
+
+    public void intake2ndSpike () {
+        driveToPosition(-26.65,-13.9, 90,1,1, DRIVE_TO);
+        robot.slideLMotor.setPower(0);
+        robot.slideRMotor.setPower(0);
+        processChain(1,-200, 50);
+        processLift(1100,2,3,0);
+        sleep(100);
+        processWrist(0.207,0.801,0);
+        sleep(100);
+        processClaw(false);
+        sleep(70);
+        processChain(1,-273,0);
+
+        robot.slideLMotor.setPower(-1);
+        robot.slideRMotor.setPower(-1);
         sleep(200);
     }
 
+    public void intake3rdSpike () {
+        driveToPosition(-28.7,-15.7,107.5,1,1, DRIVE_TO);
+        robot.slideLMotor.setPower(0);
+        robot.slideRMotor.setPower(0);
+        processChain(1,-235, 50);
+        processLift(1200,2,3,0);
+        sleep(100);
+        processWrist(0.256,0.798,0);
+        sleep(100);
+        processChain(1,-190, 50);
+        sleep(100);
+        processClaw(false);
+        sleep(70);
+        processChain(1,-270,0);
 
+        robot.slideLMotor.setPower(-1);
+        robot.slideRMotor.setPower(-1);
+        done = true;
+        sleep(250);
+    }
+
+    public void ascentPark () {
+        driveToPosition(-25, -6.9, 45, 1, 1, DRIVE_TO);
+    }
     //lame navigation functions boooooooo >:(
 
 }

@@ -61,7 +61,7 @@ public class Teleop extends LinearOpMode {
     Gamepad.RumbleEffect rightDoubleRumble;
 
     /* Declare OpMode members. */
-    HardwareZawg robot = new HardwareZawg();
+    HardwareZawg2 robot = new HardwareZawg2();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -476,17 +476,17 @@ public class Teleop extends LinearOpMode {
         if (gamepad2.triangle) { // precaution for incorrect tele-op starting position
             gamepad2.runRumbleEffect(shortRumble);
             if (gamepad2.right_bumper) {
-                robot.slideLMotor.setPower(-.5);
-                robot.slideRMotor.setPower(-.5);
+                robot.slideLMotor.setPower(.5);
+                robot.slideRMotor.setPower(.5);
             }
             else if (gamepad2.left_bumper) {
-                robot.slideLMotor.setPower(1);
-                robot.slideRMotor.setPower(1);
+                robot.slideLMotor.setPower(-1);
+                robot.slideRMotor.setPower(-1);
             }
         }
         else if( (gamepad2.left_bumper) && (robot.slideRMotorPos > 0) ) { //fast movement
-                robot.slideLMotor.setPower(1);
-                robot.slideRMotor.setPower(1);
+                robot.slideLMotor.setPower(-1);
+                robot.slideRMotor.setPower(-1);
         }
         else if (gamepad2.right_bumper) { // regular movement???
             if (robot.chainMotorPos > -940 && robot.slideRMotorPos > 1150) {
@@ -494,14 +494,14 @@ public class Teleop extends LinearOpMode {
                 robot.slideRMotor.setPower(0);
                 gamepad2.runRumbleEffect(shortRumble);
             } else if (robot.chainMotorPos > -940 && robot.slideRMotorPos > 950) {
-                robot.slideLMotor.setPower(-.5);
-                robot.slideRMotor.setPower(-.5);
+                robot.slideLMotor.setPower(.5);
+                robot.slideRMotor.setPower(.5);
             } else if (robot.chainMotorPos < -940) {
-                    robot.slideLMotor.setPower(-1);
-                    robot.slideRMotor.setPower(-1);
+                    robot.slideLMotor.setPower(1);
+                    robot.slideRMotor.setPower(1);
             } else if (robot.chainMotorPos > -940 && robot.slideRMotorPos < 1150) {
-                robot.slideLMotor.setPower(-1);
-                robot.slideRMotor.setPower(-1);
+                robot.slideLMotor.setPower(1);
+                robot.slideRMotor.setPower(1);
             } else {
                 robot.slideLMotor.setPower(0);
                 robot.slideRMotor.setPower(0);
@@ -512,11 +512,11 @@ public class Teleop extends LinearOpMode {
             //precision movement
             if( (gamepad2.left_trigger >= 0.1) && (robot.slideRMotorPos >  0) ){
                 if(gamepad2.left_trigger>=0.1 && gamepad2.left_trigger<= 0.3) {
-                    robot.slideLMotor.setPower(0.5*(gamepad2.left_trigger));
-                    robot.slideRMotor.setPower(0.5*(gamepad2.left_trigger));
+                    robot.slideLMotor.setPower(-0.5*(gamepad2.left_trigger));
+                    robot.slideRMotor.setPower(-0.5*(gamepad2.left_trigger));
                 } else {
-                    double motorPower = 1.3 * gamepad2.left_trigger;
-                    if (motorPower > 1.0) motorPower = 1.0;
+                    double motorPower = -1.3 * gamepad2.left_trigger;
+                    if (motorPower < -1.0) motorPower = -1.0;
                     robot.slideLMotor.setPower(motorPower);
                     robot.slideRMotor.setPower(motorPower);
                 }
@@ -528,19 +528,19 @@ public class Teleop extends LinearOpMode {
                     robot.slideRMotor.setPower(0);
                     gamepad2.runRumbleEffect(shortRumble);
                 } else if (robot.chainMotorPos > -940 && robot.slideRMotorPos > 850) {
-                    robot.slideLMotor.setPower(-.5*(gamepad2.right_trigger));
-                    robot.slideRMotor.setPower(-.5*(gamepad2.right_trigger));
+                    robot.slideLMotor.setPower(.5*(gamepad2.right_trigger));
+                    robot.slideRMotor.setPower(.5*(gamepad2.right_trigger));
                 } else if (robot.chainMotorPos < -940) {
                     if(gamepad2.right_trigger>=0.1 && gamepad2.right_trigger<= 0.3) {
-                        robot.slideLMotor.setPower(-0.5*(gamepad2.right_trigger));
-                        robot.slideRMotor.setPower(-0.5*(gamepad2.right_trigger));
+                        robot.slideLMotor.setPower(0.5*(gamepad2.right_trigger));
+                        robot.slideRMotor.setPower(0.5*(gamepad2.right_trigger));
                     } else {
-                        robot.slideLMotor.setPower(-1 * (gamepad2.right_trigger));
-                        robot.slideRMotor.setPower(-1 * (gamepad2.right_trigger));
+                        robot.slideLMotor.setPower(1 * (gamepad2.right_trigger));
+                        robot.slideRMotor.setPower(1 * (gamepad2.right_trigger));
                     }
                 } else if (robot.chainMotorPos > -940 && robot.slideRMotorPos < 1150) {
-                    robot.slideLMotor.setPower(-1*(gamepad2.right_trigger));
-                    robot.slideRMotor.setPower(-1*(gamepad2.right_trigger));
+                    robot.slideLMotor.setPower(1*(gamepad2.right_trigger));
+                    robot.slideRMotor.setPower(1*(gamepad2.right_trigger));
                 } else {
                     robot.slideLMotor.setPower(0);
                     robot.slideRMotor.setPower(0);
@@ -554,11 +554,11 @@ public class Teleop extends LinearOpMode {
         }
         if(gamepad2.cross) {
             if (robot.slideRMotorPos < 1000){
-                robot.slideLMotor.setPower(-0.055);
-                robot.slideRMotor.setPower(-0.055);
+                robot.slideLMotor.setPower(0.055);
+                robot.slideRMotor.setPower(0.055);
             } else {
-                robot.slideLMotor.setPower(-0.07);
-                robot.slideRMotor.setPower(-0.07);
+                robot.slideLMotor.setPower(0.07);
+                robot.slideRMotor.setPower(0.07);
             }
         }
     } // processLift
