@@ -306,7 +306,7 @@ public abstract class AutonomousBase extends LinearOpMode {
     public void veryErrorProne(double yTarget, double xTarget, double angleTarget, double speedMax ) {
         double errorMultiplier = .7;  // ramp down from 100% to 0% starting at 12" away (12" = 1 / 0.08)
         double speedMin = 0.06;         // below this power robot won't move
-        double allowedError = 0.75;      // inches (once we're within this distance of our target we're DONE
+        double allowedError = 0.4;      // inches (once we're within this distance of our target we're DONE
         performEveryLoop();
         // Loop until we get to destination.
         while(!driveToXY(yTarget, xTarget, angleTarget, speedMin, speedMax, errorMultiplier, allowedError, DRIVE_TO)
