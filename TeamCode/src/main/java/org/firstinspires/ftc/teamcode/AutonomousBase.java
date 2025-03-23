@@ -149,7 +149,7 @@ public abstract class AutonomousBase extends LinearOpMode {
      */
     protected boolean driveToXY ( double yTarget, double xTarget, double angleTarget,
                                   double speedMax, int driveType){
-        double errorMultiplier = 0.035;   // convert position-error to motor power TODO: FINE TUNE BASED ON AUTO EXPERIENCE
+        double errorMultiplier = 0.038;   // convert position-error to motor power TODO: FINE TUNE BASED ON AUTO EXPERIENCE
         double speedMin = MIN_DRIVE_MAGNITUDE;
         double allowedError = (driveType == DRIVE_THRU) ? 2.50 : 0.5;
         return (driveToXY(yTarget, xTarget, angleTarget, speedMin, speedMax, errorMultiplier,
@@ -297,7 +297,7 @@ public abstract class AutonomousBase extends LinearOpMode {
         double allowedError = 1.5;      // inches (once we're within this distance of our target we're DONE
         performEveryLoop();
         // Loop until we get to destination.
-        while(!driveToXY(yTarget, xTarget, angleTarget, speedMin, speedMax, errorMultiplier, allowedError, DRIVE_TO)
+        while(!driveToXY(yTarget, xTarget, angleTarget, speedMin, speedMax, errorMultiplier, allowedError, DRIVE_THRU)
                 && opModeIsActive()) {
             performEveryLoop();
         }

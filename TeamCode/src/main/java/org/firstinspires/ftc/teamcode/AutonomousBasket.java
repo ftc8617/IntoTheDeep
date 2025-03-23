@@ -32,11 +32,11 @@ public class AutonomousBasket extends AutonomousBase {
             captureGamepad1Buttons();
             // Do we need to preload a specimen?
             if (gamepad1_r_bumper_now && !gamepad1_r_bumper_last) {
-                if (robot.clawOpen) { //closes claw
+                if (robot.clawOpen) { // closes claw
                     robot.clawPos = 0.565;
                     robot.clawOpen = false;
                     robot.clawServo.setPosition(robot.clawPos);
-                } else { //opens claw
+                } else { // opens claw
                     robot.clawPos = 0.685;
                     robot.clawOpen = true;
                     robot.clawServo.setPosition(robot.clawPos);
