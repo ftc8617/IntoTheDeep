@@ -69,6 +69,7 @@ public class AutonomousBasket extends AutonomousBase {
         done = true;
         scoreHighBasket();
 
+        robot.driveTrainMotorsZero();
         sleep(30000000);
 
     } // mainAutonomous

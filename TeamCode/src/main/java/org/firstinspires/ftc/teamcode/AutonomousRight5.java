@@ -84,10 +84,10 @@ public class AutonomousRight5 extends AutonomousBase {
         hookSpecimenOnBarBWD( specimensHooked++ );
 
         // Score third of the three herded samples
-        grabSpecimenFromWall( specimensGrabbed++ );
-        hookSpecimenOnBarBWD( specimensHooked++ );
+//        grabSpecimenFromWall( specimensGrabbed++ );
+//        hookSpecimenOnBarBWD( specimensHooked++ );
 
-        // Park in observation zone for for 3pts (if time allows)
+        // Park in observation zone for 3pts (if time allows)
         parkInObservation();
         
         // ensure motors are turned off even if we run out of time
@@ -268,7 +268,7 @@ public class AutonomousRight5 extends AutonomousBase {
 
         // Drive to the final wall-collect position (slowly)
         if( opModeIsActive() ) {
-            driveToPosition( 4.6, 18.6, 180, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_TO );
+            wallIntakeSpec( 4.6, 18.6, 180, DRIVE_SPEED_70);
 //          robot.clawStateSet( Hardware2025Bot.clawStateEnum.CLAW_CLOSED );
 //          sleep(350); // allow claw to close (350msec)
         } // opModeIsActive
