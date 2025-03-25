@@ -236,7 +236,6 @@ public class AutonomousRight5 extends AutonomousBase {
             // from the wall might leave our magnetic sign attached to the field wall!
             pos_y -= 5.0;
             pos_x -= 1.0;
-           // pos_angle=175.0;  // angle the bot away from the wall as we herd the final sample
             driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             // Go fast to the edge of the observation zone
             pos_y =  17.0;
@@ -275,11 +274,6 @@ public class AutonomousRight5 extends AutonomousBase {
         // Lift the specimen off the field wall
         if( opModeIsActive() ) {
             processWrist(0.770, 0.243, 0);
-//          autoTiltMotorMoveToTarget(Hardware2025Bot.TILT_ANGLE_WALL1_DEG, 1.0);
-//          autoViperMotorMoveToTarget(Hardware2025Bot.VIPER_EXTEND_WALL1);
-//          robot.wristServo.setPosition(Hardware2025Bot.WRIST_SERVO_WALL1);
-//          robot.elbowServo.setPosition(Hardware2025Bot.ELBOW_SERVO_WALL1);
-//          sleep(600); // allow arm to lift above the wall (600 msec)
         } // opModeIsActive
 
     } // grabSpecimenFromWall
