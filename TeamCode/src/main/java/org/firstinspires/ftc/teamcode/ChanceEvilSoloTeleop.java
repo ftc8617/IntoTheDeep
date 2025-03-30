@@ -630,26 +630,26 @@ public class ChanceEvilSoloTeleop extends LinearOpMode {
         }
         //manual differential rotation
         if(gamepad1.cross) {
-            if (gamepad1.right_stick_y >= .25) { //rotate yaw up
+            if (gamepad1.left_stick_y >= .25) { //rotate yaw up
                 if (robot.diffyLPos > .015 && robot.diffyRPos < 0.985) {
-                    robot.diffyLPos -= .015 * (gamepad1.right_stick_y);
-                    robot.diffyRPos += .015 * (gamepad1.right_stick_y);
+                    robot.diffyLPos -= .015 * (gamepad1.left_stick_y);
+                    robot.diffyRPos += .015 * (gamepad1.left_stick_y);
                 } else {
                     gamepad1.runRumbleEffect(shortRumble);
                 }
-            } else if (gamepad1.right_stick_y <= -.25) { //rotate yaw down
+            } else if (gamepad1.left_stick_y <= -.25) { //rotate yaw down
                 if (robot.diffyLPos < 0.985 && robot.diffyRPos > 0.015) {
-                    robot.diffyLPos += -.015 * (gamepad1.right_stick_y);
-                    robot.diffyRPos -= -.015 * (gamepad1.right_stick_y);
+                    robot.diffyLPos += -.015 * (gamepad1.left_stick_y);
+                    robot.diffyRPos -= -.015 * (gamepad1.left_stick_y);
                 } else {
                     gamepad1.runRumbleEffect(shortRumble);
                 }
             }
 
-            if (gamepad1.right_stick_x >= .25) { //rotate roll right
+            if (gamepad1.left_stick_x >= .25) { //rotate roll right
                 if (robot.diffyLPos < 0.985 && robot.diffyRPos < 0.985) {
-                    robot.diffyLPos += .015 * (gamepad1.right_stick_x);
-                    robot.diffyRPos += .015 * (gamepad1.right_stick_x);
+                    robot.diffyLPos += .015 * (gamepad1.left_stick_x);
+                    robot.diffyRPos += .015 * (gamepad1.left_stick_x);
                 } else {
                     gamepad1.runRumbleEffect(shortRumble);
                 }
