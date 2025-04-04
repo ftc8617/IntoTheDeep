@@ -6,6 +6,8 @@ import static java.lang.Math.toRadians;
 import android.os.SystemClock;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -13,8 +15,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import java.util.Locale;
-
 @Autonomous(name="Autonomous Clip", group="8617", preselectTeleOp = "Teleop")
+@Disabled
 public class AutonomousClip extends AutonomousBase {
 
     boolean autoRunning = false;

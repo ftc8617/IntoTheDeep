@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Right: clip 5 (83 pts)", group="8617", preselectTeleOp = "Teleop")
+@Autonomous(name="Right: clip 4 (83 pts)", group="8617", preselectTeleOp = "Teleop")
 //@Disabled
 public class AutonomousRight5 extends AutonomousBase {
     boolean debugMode = true;
@@ -105,14 +105,14 @@ public class AutonomousRight5 extends AutonomousBase {
         // (raising the lift while against the wall will cause lift motor to hit rear wall)
         if( opModeIsActive() ) {
             // Move 3 inches away from field wall before we begin to lift our slides
-            driveToPosition( 3.00, 0.00, 0.00, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
+            driveToPosition( 3.00, 0.00, 0.00, DRIVE_SPEED_30, TURN_SPEED_100, DRIVE_THRU );
             pos_x = -6.25; // hang initial specimen 6.25 inches to the left of starting position
         } // opModeIsActive
 
         // Drive toward submersible
         if( opModeIsActive() ) {
             // Start tilting and extending the arm, and positioning the specimen
-            processChain(1, -943, 0);
+            processChain(1, -952, 2000);
 
             // Drive to the scoring position next to the submersible
             driveToPosition( 16.2, (pos_x+2.2), 0.00, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
@@ -222,11 +222,11 @@ public class AutonomousRight5 extends AutonomousBase {
         } // opModeIsActive
         // What about the 3rd one against the wall?
         if( opModeIsActive() ) {
-            pos_y=46.0; pos_x=40.5; pos_angle=180.0; // start at this absolute location
+            pos_y=49.0; pos_x=40.5; pos_angle=180.0; // start at this absolute location
             driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
-            pos_x+=1.5; // 1.5" toward wall/samples
-            driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
-            timeDriveStrafe(DRIVE_SPEED_20,1000); // ensure we slowly align to the wall
+//            pos_x+=1.5; // 1.5" toward wall/samples
+//            driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
+            timeDriveStrafe(DRIVE_SPEED_20,1500); // ensure we slowly align to the wall
             // What does odometry report as our new X,Y location? (we're aligned to wall, so by
             // definition we're at 180deg, even if the initial alignment was off a degree or two
             pos_y=robotGlobalYCoordinatePosition;
@@ -238,7 +238,7 @@ public class AutonomousRight5 extends AutonomousBase {
             pos_x -= 1.0;
             driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             // Go fast to the edge of the observation zone
-            pos_y =  17.0;
+            pos_y =  20.0;
             pos_x -= 2.5;  // end 2" away from the wall
             driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             // ease into the observation zone (in case we hit the wall, or another robot)
