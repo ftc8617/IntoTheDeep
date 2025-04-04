@@ -304,7 +304,7 @@ public abstract class AutonomousBase extends LinearOpMode {
     } // herdForwardQuickly
 
     public void veryErrorProne(double yTarget, double xTarget, double angleTarget, double speedMax ) {
-        double errorMultiplier = .7;  // ramp down from 100% to 0% starting at 12" away (12" = 1 / 0.08)
+        double errorMultiplier = .6;  // ramp down from 100% to 0% starting at 12" away (12" = 1 / 0.08)
         double speedMin = 0.06;         // below this power robot won't move
         double allowedError = 0.4;      // inches (once we're within this distance of our target we're DONE
         performEveryLoop();

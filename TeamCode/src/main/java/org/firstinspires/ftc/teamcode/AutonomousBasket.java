@@ -147,7 +147,7 @@ public class AutonomousBasket extends AutonomousBase {
         robot.slideRMotor.setPower(1);
         processLift(2200,2,2.5,0.07);
         processWrist(0.506, 0.110, 1);
-        veryErrorProne(-26.4, -5.6, 45, .5);
+        veryErrorProne(-26, -5.9, 45, .5);
         sleep(100);
         processClaw(true);
         sleep(75);
