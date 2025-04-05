@@ -317,8 +317,8 @@ public abstract class AutonomousBase extends LinearOpMode {
 
     public void wallIntakeSpec (double yTarget, double xTarget, double angleTarget, double speedMax ) {
         double errorMultiplier = .03;  // ramp down from 100% to 0% starting at 12" away (12" = 1 / 0.08)
-        double speedMin = 0.06;         // below this power robot won't move
-        double allowedError = 0.5;      // inches (once we're within this distance of our target we're DONE
+        double speedMin = 0.06;        // below this power robot won't move
+        double allowedError = 0.60;    // inches (once we're within this distance of our target we're DONE
         performEveryLoop();
         // Loop until we get to destination.
         while(!driveToXY(yTarget, xTarget, angleTarget, speedMin, speedMax, errorMultiplier, allowedError, DRIVE_TO)

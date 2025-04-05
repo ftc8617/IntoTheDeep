@@ -4,10 +4,16 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+
+import java.util.Locale;
+
 @Autonomous(name="Right: clip 4 (83 pts)", group="8617", preselectTeleOp = "Teleop")
 //@Disabled
 public class AutonomousRight5 extends AutonomousBase {
-    boolean debugMode = true;
+    boolean debugMode = false;
 
     double pos_y=0, pos_x=0, pos_angle=0.0;  // Allows us to specify movement INCREMENTALLY, not ABSOLUTE
 
@@ -26,6 +32,9 @@ public class AutonomousRight5 extends AutonomousBase {
 
         // Wait for the game to start (driver presses PLAY).  While waiting, poll for options
         while (!isStarted()) {
+            performEveryLoop();
+
+
             robot.clawPos = 0.565;
             // Check for operator input that changes Autonomous options
             captureGamepad1Buttons();
@@ -41,8 +50,13 @@ public class AutonomousRight5 extends AutonomousBase {
                     robot.clawServo.setPosition(robot.clawPos);
                 }
             } //  gamepad1_r_bumper
-            // Pause briefly before looping
+            telemetry.addLine("Initialized & Looping rn gang");
+            String posStr = String.format(Locale.US, "{X,Y: %.1f, %.1f in  H: %.1f deg}", robotGlobalXCoordinatePosition, robotGlobalYCoordinatePosition,Math.toDegrees(robotOrientationRadians));
+            telemetry.addData("Position", posStr);
+            telemetry.update();
+            //pause brieefly before looping
             idle();
+
         } // !isStarted
 
         mainAutonomous();
@@ -106,22 +120,21 @@ public class AutonomousRight5 extends AutonomousBase {
         if( opModeIsActive() ) {
             // Move 3 inches away from field wall before we begin to lift our slides
             driveToPosition( 3.00, 0.00, 0.00, DRIVE_SPEED_30, TURN_SPEED_100, DRIVE_THRU );
-            pos_x = -6.25; // hang initial specimen 6.25 inches to the left of starting position
+            pos_x = -6.0; // hang initial specimen 6 inches to the left of starting position
         } // opModeIsActive
 
         // Drive toward submersible
         if( opModeIsActive() ) {
             // Start tilting and extending the arm, and positioning the specimen
-            processChain(1, -952, 2000);
-
+            processChain(1, -942, 0);
             // Drive to the scoring position next to the submersible
             driveToPosition( 16.2, (pos_x+2.2), 0.00, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             processWrist(0.497, 0.516, 0);
-            pos_y = 27.80 + (specimenNumber * 0.25);  // specimenNumber doesn't matter, as only use once
-            driveToPosition( pos_y, pos_x, 0.00, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_TO );
+            pos_y = 26.5 + (specimenNumber * 0.25);  // specimenNumber doesn't matter, as only use once
+            driveToPosition( pos_y, pos_x, 0.00, DRIVE_SPEED_50, TURN_SPEED_50, DRIVE_TO );
             robot.driveTrainMotorsZero();  // make double sure we're stopped
             // If we drive to the submersible faster than the arm moves, wait for the arm
-            //sleep(100);
+ //         sleep(1000);
         } // opModeIsActive
 
         // Rotate arm, viper slide, and claw down to clip the specimen
@@ -143,14 +156,6 @@ public class AutonomousRight5 extends AutonomousBase {
             // Back away in preparation of herding
             driveToPosition(26.5, 0.0, 90.0, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU);
             processChain(1, -255, 0);
-
-        } // opModeIsActive
-
-        // Now that we're clear from the submersible, rotate arm down and store claw
-        if( opModeIsActive() ) {
-//          robot.elbowServo.setPosition(Hardware2025Bot.ELBOW_SERVO_INIT);
-//          robot.wristServo.setPosition(Hardware2025Bot.WRIST_SERVO_INIT);
-//          autoTiltMotorMoveToTarget(Hardware2025Bot.TILT_ANGLE_WALL_DEG, 0.80);
         } // opModeIsActive
 
     }  // hookSpecimenOnBarFWD
@@ -164,33 +169,38 @@ public class AutonomousRight5 extends AutonomousBase {
         // Drive toward submersible
         if( opModeIsActive() ) {
             // Start tilting and extending the arm, and positioning the specimen
-//          autoTiltMotorMoveToTarget(Hardware2025Bot.TILT_ANGLE_SPECIMEN3_DEG, 1.0);
-//          autoViperMotorMoveToTarget(Hardware2025Bot.VIPER_EXTEND_AUTO3);
+            processChain(1, -1656, 0);
+            processWrist( 0.56, 0.069, 0);
             // shift left 3" each time we hang a new specimen
-            pos_x = -6.80 - (3.0 * specimenNumber);
+            pos_x = -7.0 - (3.0 * specimenNumber);
             // Drive partway in Y and X toward the scoring position next to the submersible
             driveToPosition( 18.2, (pos_x+10.0), 180.0, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
-//          robot.wristServo.setPosition(Hardware2025Bot.WRIST_SERVO_BAR3);
-//          robot.elbowServo.setPosition(Hardware2025Bot.ELBOW_SERVO_BAR3);
-            // Finish the drive to the submersible bar
-            pos_y = 26.40 + (specimenNumber * 0.15);
+            // Drive partway to the submersible bar
+            pos_y = 26.2 + (specimenNumber * 0.20);
             driveToPosition( pos_y, pos_x, 180.0, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_TO );
+            // Raise lift (currently not safe to call processLift while driving)
+            processLift( 600,2,2.0,0.03);
+            // With lift raised above the bar, final approach to submersible bar
+            pos_y += 3.6;
+            driveToPosition( pos_y, pos_x, 180.0, DRIVE_SPEED_50, TURN_SPEED_50, DRIVE_TO );
             robot.driveTrainMotorsZero();  // make double sure we're stopped
         } // opModeIsActive
 
         // Retract slide to clip the specimen, then release the claw
         if( opModeIsActive() ) {
-//          autoViperMotorMoveToTarget(Hardware2025Bot.VIPER_EXTEND_AUTO4);
-//          sleep( 800 );
+            // retract arm to clip specimen
+            robot.slideLMotor.setPower(-1.0);
+            robot.slideRMotor.setPower(-1.0);
+            sleep(450);
             processClaw(true);
         } // opModeIsActive
 
         // Fully retract arm for driving as we pivot away from the submersible
         if( opModeIsActive() ) {
-//          autoViperMotorMoveToTarget( Hardware2025Bot.VIPER_EXTEND_ZERO);
-//          robot.elbowServo.setPosition(Hardware2025Bot.ELBOW_SERVO_INIT);
-//          robot.wristServo.setPosition(Hardware2025Bot.WRIST_SERVO_INIT);
-//          autoTiltMotorMoveToTarget(Hardware2025Bot.TILT_ANGLE_WALL_DEG, 0.80);
+          processChain(1, -255, 0);
+          processWrist(0.560, 0.454, 0);
+          robot.slideLMotor.setPower(-0.40);
+          robot.slideRMotor.setPower(-0.40);
         } // opModeIsActivee
 
     }  // hookSpecimenOnBarBWD
@@ -202,7 +212,9 @@ public class AutonomousRight5 extends AutonomousBase {
             // Navigate around the corner of the submersible
             driveToPosition( 26.7, 10.5, 112.0, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             driveToPosition( 30.3, 18.4, 137.0, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
-            driveToPosition( 34.0, 20.0, 180.00, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
+            driveToPosition( 34.0, 19.5, 180.00, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
+            robot.slideLMotor.setPower(-0.2);
+            robot.slideRMotor.setPower(-0.2);
             // Align for the first sample
             pos_y=46.5; pos_x=23.7; pos_angle=180.0; // start at this absolute location
             driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
@@ -222,24 +234,17 @@ public class AutonomousRight5 extends AutonomousBase {
         } // opModeIsActive
         // What about the 3rd one against the wall?
         if( opModeIsActive() ) {
-            pos_y=49.0; pos_x=40.5; pos_angle=180.0; // start at this absolute location
+            pos_y=44.0; pos_x=40.5; pos_angle=180.0; // start at this absolute location
             driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
-//            pos_x+=1.5; // 1.5" toward wall/samples
-//            driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
-            timeDriveStrafe(DRIVE_SPEED_20,1500); // ensure we slowly align to the wall
+            timeDriveStrafe(DRIVE_SPEED_20,1250); // ensure we slowly align to the wall
             // What does odometry report as our new X,Y location? (we're aligned to wall, so by
             // definition we're at 180deg, even if the initial alignment was off a degree or two
             pos_y=robotGlobalYCoordinatePosition;
             pos_x=robotGlobalXCoordinatePosition;
             robotOrientationRadians = Math.toRadians(180.0);
-            // Drive away from the wall in a DIAGONAL FORWARD movement (driving  sideways away
-            // from the wall might leave our magnetic sign attached to the field wall!
-            pos_y -= 5.0;
-            pos_x -= 1.0;
-            driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             // Go fast to the edge of the observation zone
-            pos_y =  20.0;
-            pos_x -= 2.5;  // end 2" away from the wall
+            pos_y =  28.0;
+            pos_x -= 2.5;  // end 2.5" away from the side wall
             driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             // ease into the observation zone (in case we hit the wall, or another robot)
             timeDriveStraight(DRIVE_SPEED_20,1000);  // this stops all motors
@@ -266,9 +271,11 @@ public class AutonomousRight5 extends AutonomousBase {
 
         // Drive to the final wall-collect position (slowly)
         if( opModeIsActive() ) {
+            robot.slideLMotor.setPower(0.0);
+            robot.slideRMotor.setPower(0.0);
             wallIntakeSpec( 5.5, 18.6, 180, DRIVE_SPEED_70);
             processClaw(false);
-            sleep(25);
+            sleep(50);
         } // opModeIsActive
 
         // Lift the specimen off the field wall

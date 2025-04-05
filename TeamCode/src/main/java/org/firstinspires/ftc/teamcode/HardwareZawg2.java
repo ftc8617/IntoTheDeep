@@ -88,7 +88,7 @@ public class HardwareZawg2
 
     protected DcMotorEx chainMotor     = null;
     public int          chainMotorTgt  = 0;       // EH0
-    public int          chainMotorPos  = 0;       // EH0
+    public int chainMotorPos  = 0;      // EH0
     public double       chainMotorVel  = 0.0;     // EH0
 
     public Servo clawServo   = null;
@@ -199,11 +199,11 @@ public class HardwareZawg2
             chainMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             chainMotor.setTargetPosition(0);
         } else {
-            chainMotor.setTargetPosition(chainMotorPos);
+            chainMotor.setTargetPosition(chainMotor.getCurrentPosition());
         }
+
         chainMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         chainMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        chainMotor.setPower(0);
 
         // Initialize robot hardware (autonomous=true initializes servos)
         clawServo   = hwMap.get(Servo.class,"claw");            // servo port 0 (Expansion Hub)
