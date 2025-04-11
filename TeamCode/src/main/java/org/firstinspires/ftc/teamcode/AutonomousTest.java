@@ -2,13 +2,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="Autonomous Test", group="8617", preselectTeleOp = "Teleop")
+@Disabled
 public class AutonomousTest extends AutonomousBase {
 
     boolean autoRunning = false;
-    @Override
+   // @Override
     public void runOpMode() throws InterruptedException {
 
         telemetry.addData("State", "Initializing (please wait)");

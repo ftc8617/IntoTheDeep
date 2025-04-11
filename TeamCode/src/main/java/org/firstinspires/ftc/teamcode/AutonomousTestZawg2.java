@@ -2,8 +2,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="Autonomous Test Zawg2", group="8617", preselectTeleOp = "Teleop")
+@Disabled
 public class AutonomousTestZawg2 extends AutonomousBase {
     HardwareZawg2 robot = new HardwareZawg2();
 
