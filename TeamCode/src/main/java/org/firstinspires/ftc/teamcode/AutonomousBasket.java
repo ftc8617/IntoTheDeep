@@ -170,7 +170,7 @@ public class AutonomousBasket extends AutonomousBase {
         processChain(1,-200, 50);
         processLift(1080,2,3,0);
         sleep(100);
-        processWrist(0.207,0.801,0);
+        processWrist(0.646,0.366,0);
         sleep(100);
         processClaw(false);
         sleep(70);
@@ -188,7 +188,7 @@ public class AutonomousBasket extends AutonomousBase {
         processChain(1,-200, 50);
         processLift(1100,2,3,0);
         sleep(100);
-        processWrist(0.207,0.801,0);
+        processWrist(0.646,0.366,0);
         sleep(100);
         processClaw(false);
         sleep(70);
@@ -204,9 +204,9 @@ public class AutonomousBasket extends AutonomousBase {
         robot.slideLMotor.setPower(0);
         robot.slideRMotor.setPower(0);
         processChain(1,-235, 50);
-        processLift(1200,2,3,0);
+        processLift(1180,2,3,0);
         sleep(100);
-        processWrist(0.256,0.798,0);
+        processWrist(0.666,0.336,0);
         sleep(100);
         processChain(1,-190, 50);
         sleep(100);

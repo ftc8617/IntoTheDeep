@@ -177,7 +177,7 @@ public class AutonomousRight5 extends AutonomousBase {
             driveToPosition( 18.2, (pos_x+10.0), 180.0, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             // Drive partway to the submersible bar
             pos_y = 26.2 + (specimenNumber * 0.20);
-            driveToPosition( pos_y, pos_x, 180.0, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_TO );
+            driveToPosition( pos_y, pos_x, 180.0, DRIVE_SPEED_70, TURN_SPEED_100, DRIVE_TO );
             // Raise lift (currently not safe to call processLift while driving)
             processLift( 600,2,2.0,0.03);
             // With lift raised above the bar, final approach to submersible bar
@@ -245,9 +245,9 @@ public class AutonomousRight5 extends AutonomousBase {
             // Go fast to the edge of the observation zone
             pos_y =  28.0;
             pos_x -= 2.5;  // end 2.5" away from the side wall
-            driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
+            driveToPosition( pos_y, pos_x, pos_angle, DRIVE_SPEED_100, TURN_SPEED_70, DRIVE_THRU );
             // ease into the observation zone (in case we hit the wall, or another robot)
-            timeDriveStraight(DRIVE_SPEED_20,1000);  // this stops all motors
+            timeDriveStraight(DRIVE_SPEED_70,400);  // this stops all motors
             // NOTE: this ending position also counts as PARKED
         } // opModeIsActive
 
