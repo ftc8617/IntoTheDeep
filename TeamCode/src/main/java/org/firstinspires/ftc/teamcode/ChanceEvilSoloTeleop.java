@@ -620,13 +620,13 @@ public class ChanceEvilSoloTeleop extends LinearOpMode {
                 robot.diffyLPos = 0.497; robot.diffyLServo.setPosition(robot.diffyLPos);
                 robot.diffyRPos = 0.500; robot.diffyRServo.setPosition(robot.diffyRPos);
         }
-        else if (gamepad1.dpad_up) { //preset for scoring on basket
-            robot.diffyLPos = 0.434;    robot.diffyLServo.setPosition(robot.diffyLPos);
-            robot.diffyRPos = 0.195;    robot.diffyRServo.setPosition(robot.diffyRPos);
+        else if (gamepad2.dpad_up) { //preset for scoring on basket
+            robot.diffyLPos = 0.150;    robot.diffyLServo.setPosition(robot.diffyLPos);
+            robot.diffyRPos = 0.457;    robot.diffyRServo.setPosition(robot.diffyRPos);
         }
-        else if (gamepad1.dpad_left) { //preset for scoring on chambers
-            robot.diffyLPos = 0.506; robot.diffyLServo.setPosition(robot.diffyLPos);
-            robot.diffyRPos = 0.110; robot.diffyRServo.setPosition(robot.diffyRPos);
+        else if (gamepad2.dpad_left) { //preset for scoring on chambers
+            robot.diffyLPos = 0.026; robot.diffyLServo.setPosition(robot.diffyLPos);
+            robot.diffyRPos = 0.570; robot.diffyRServo.setPosition(robot.diffyRPos);
         }
         //manual differential rotation
         if(gamepad1.cross) {
@@ -687,12 +687,12 @@ public class ChanceEvilSoloTeleop extends LinearOpMode {
 
         if (robot.clawOpen) //set value based on bool
         {
-            robot.clawPos = 0.685;
+            robot.clawPos = 0.970;
             robot.clawServo.setPosition(robot.clawPos);
         }
         else
         {
-            robot.clawPos = 0.562;
+            robot.clawPos = 0.870;
             robot.clawServo.setPosition(robot.clawPos);
         }
 

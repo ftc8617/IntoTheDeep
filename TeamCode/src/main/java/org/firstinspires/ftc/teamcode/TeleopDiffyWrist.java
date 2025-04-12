@@ -48,7 +48,7 @@ public class TeleopDiffyWrist extends LinearOpMode {
         diffyRServo = hardwareMap.servo.get("diffyR");          // servo port 2 (Control Hub)
 
         // Preload each variable with the initialization position
-        clawPos   = 0.565;    clawServo.setPosition(clawPos);
+        clawPos   = 0.860;    clawServo.setPosition(clawPos);
         diffyLPos = 0.500;    diffyLServo.setPosition(diffyLPos);
         diffyRPos = 0.500;    diffyRServo.setPosition(diffyRPos);
 

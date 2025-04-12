@@ -95,9 +95,9 @@ public class HardwareZawg2
     public Servo diffyLServo = null;
     public Servo diffyRServo = null;
 
-    public double  clawPos   = 0.565;
-    public double  diffyLPos = 0.846;
-    public double  diffyRPos = 0.202;
+    public double  clawPos   = 0.870;
+    public double  diffyLPos = 0.077;
+    public double  diffyRPos = 0.863;
     public boolean clawOpen = false; 
 
     /* local OpMode members. */
@@ -212,8 +212,8 @@ public class HardwareZawg2
 
         // Preload each variable with the initialization position
         if( isAutonomous ) {
-          diffyLPos = 0.846;    diffyLServo.setPosition(diffyLPos);
-          diffyRPos = 0.202;    diffyRServo.setPosition(diffyRPos);
+          diffyLPos = 0.114;    diffyLServo.setPosition(diffyLPos);
+          diffyRPos = 0.884;    diffyRServo.setPosition(diffyRPos);
           clawOpen = false;
         }
 
@@ -225,9 +225,9 @@ public class HardwareZawg2
     /*--------------------------------------------------------------------------------------------*/
     public void resetEncoders() {
         odom.resetPosAndIMU();
-        clawPos   = 0.29;     clawServo.setPosition(clawPos);
-       diffyLPos = 0.846;    diffyLServo.setPosition(diffyLPos);
-       diffyRPos = 0.202;    diffyRServo.setPosition(diffyRPos);
+        clawPos   = 0.87;     clawServo.setPosition(clawPos);
+       diffyLPos = 0.114;    diffyLServo.setPosition(diffyLPos);
+       diffyRPos = 0.884;    diffyRServo.setPosition(diffyRPos);
        clawOpen = false;
        chainMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        chainMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

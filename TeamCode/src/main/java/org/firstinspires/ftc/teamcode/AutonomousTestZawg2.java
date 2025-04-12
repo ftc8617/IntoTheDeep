@@ -26,17 +26,17 @@ public class AutonomousTestZawg2 extends AutonomousBase {
         telemetry.update();
 
         while (!isStarted()) {
-            robot.clawPos = 0.565;
+            robot.clawPos = 0.87;
             // Check for operator input that changes Autonomous options
             captureGamepad1Buttons();
             // Do we need to preload a specimen?
             if (gamepad1_r_bumper_now && !gamepad1_r_bumper_last) {
                 if (robot.clawOpen) { //closes claw
-                    robot.clawPos = 0.565;
+                    robot.clawPos = 0.87;
                     robot.clawOpen = false;
                     robot.clawServo.setPosition(robot.clawPos);
                 } else { //opens claw
-                    robot.clawPos = 0.685;
+                    robot.clawPos = 0.97;
                     robot.clawOpen = true;
                     robot.clawServo.setPosition(robot.clawPos);
                 }
@@ -94,12 +94,12 @@ public class AutonomousTestZawg2 extends AutonomousBase {
             robot.diffyRServo.setPosition(right);
         }
         else if (preset == 1) { // chamber scoring
-            robot.diffyLPos = 0.506; robot.diffyLServo.setPosition(robot.diffyLPos);
-            robot.diffyRPos = 0.110; robot.diffyRServo.setPosition(robot.diffyRPos);
+            robot.diffyLPos = 0.026; robot.diffyLServo.setPosition(robot.diffyLPos);
+            robot.diffyRPos = 0.570; robot.diffyRServo.setPosition(robot.diffyRPos);
         }
         else if (preset == 2) { // basket scoring
-            robot.diffyLPos = 0.434;    robot.diffyLServo.setPosition(robot.diffyLPos);
-            robot.diffyRPos = 0.195;    robot.diffyRServo.setPosition(robot.diffyRPos);
+            robot.diffyLPos = 0.150;    robot.diffyLServo.setPosition(robot.diffyLPos);
+            robot.diffyRPos = 0.457;    robot.diffyRServo.setPosition(robot.diffyRPos);
         }
         else if (preset == 3) { // wall intake
             robot.diffyLPos = 0.497; robot.diffyLServo.setPosition(robot.diffyLPos);
@@ -142,10 +142,10 @@ public class AutonomousTestZawg2 extends AutonomousBase {
 
     public void processClaw (boolean open) {
         if (open) {
-            robot.clawServo.setPosition(0.685); //opens claw
+            robot.clawServo.setPosition(0.97); //opens claw
             robot.clawOpen = true;
         } else {
-            robot.clawServo.setPosition(0.562); //closes claw
+            robot.clawServo.setPosition(0.87); //closes claw
             robot.clawOpen = false;
         }
     }

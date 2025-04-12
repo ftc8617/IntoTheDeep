@@ -35,17 +35,17 @@ public class AutonomousRight5 extends AutonomousBase {
             performEveryLoop();
 
 
-            robot.clawPos = 0.565;
+            robot.clawPos = 0.87;
             // Check for operator input that changes Autonomous options
             captureGamepad1Buttons();
             // Do we need to preload a specimen?
             if (gamepad1_r_bumper_now && !gamepad1_r_bumper_last) {
                 if (robot.clawOpen) { // closes claw
-                    robot.clawPos = 0.565;
+                    robot.clawPos = 0.870;
                     robot.clawOpen = false;
                     robot.clawServo.setPosition(robot.clawPos);
                 } else { // opens claw
-                    robot.clawPos = 0.685;
+                    robot.clawPos = 0.97;
                     robot.clawOpen = true;
                     robot.clawServo.setPosition(robot.clawPos);
                 }
@@ -170,7 +170,7 @@ public class AutonomousRight5 extends AutonomousBase {
         if( opModeIsActive() ) {
             // Start tilting and extending the arm, and positioning the specimen
             processChain(1, -1656, 0);
-            processWrist( 0.56, 0.069, 0);
+            processWrist( 0.026, 0.570, 0);
             // shift left 3" each time we hang a new specimen
             pos_x = -7.0 - (3.0 * specimenNumber);
             // Drive partway in Y and X toward the scoring position next to the submersible
@@ -181,7 +181,7 @@ public class AutonomousRight5 extends AutonomousBase {
             // Raise lift (currently not safe to call processLift while driving)
             processLift( 600,2,2.0,0.03);
             // With lift raised above the bar, final approach to submersible bar
-            pos_y += 3.6;
+            pos_y += 5; //was 3.6
             driveToPosition( pos_y, pos_x, 180.0, DRIVE_SPEED_50, TURN_SPEED_50, DRIVE_TO );
             robot.driveTrainMotorsZero();  // make double sure we're stopped
         } // opModeIsActive
@@ -198,7 +198,7 @@ public class AutonomousRight5 extends AutonomousBase {
         // Fully retract arm for driving as we pivot away from the submersible
         if( opModeIsActive() ) {
           processChain(1, -255, 0);
-          processWrist(0.560, 0.454, 0);
+          processWrist(0.500, 0.500, 0);
           robot.slideLMotor.setPower(-0.40);
           robot.slideRMotor.setPower(-0.40);
         } // opModeIsActivee
@@ -258,7 +258,7 @@ public class AutonomousRight5 extends AutonomousBase {
 
         // Prepare arm for grabbing specimens from wall, and move to initial wall-collect position (quickly)
         if( opModeIsActive() ) {
-            processWrist(0.560, 0.454, 0);
+            processWrist(0.423, 0.574, 0);
             processClaw(true);
             if( specimenNumber == 0 ) {
                // Approach along x-axis from herding spike marks...
@@ -280,7 +280,7 @@ public class AutonomousRight5 extends AutonomousBase {
 
         // Lift the specimen off the field wall
         if( opModeIsActive() ) {
-            processWrist(0.770, 0.243, 0);
+            processWrist(0.314, 0.676, 0);
         } // opModeIsActive
 
     } // grabSpecimenFromWall
@@ -300,12 +300,12 @@ public class AutonomousRight5 extends AutonomousBase {
             robot.diffyRServo.setPosition(right);
         }
         else if (preset == 1) { // chamber scoring
-            robot.diffyLPos = 0.506; robot.diffyLServo.setPosition(robot.diffyLPos);
-            robot.diffyRPos = 0.110; robot.diffyRServo.setPosition(robot.diffyRPos);
+            robot.diffyLPos = 0.026; robot.diffyLServo.setPosition(robot.diffyLPos);
+            robot.diffyRPos = 0.570; robot.diffyRServo.setPosition(robot.diffyRPos);
         }
         else if (preset == 2) { // basket scoring
-            robot.diffyLPos = 0.434;    robot.diffyLServo.setPosition(robot.diffyLPos);
-            robot.diffyRPos = 0.195;    robot.diffyRServo.setPosition(robot.diffyRPos);
+            robot.diffyLPos = 0.150;    robot.diffyLServo.setPosition(robot.diffyLPos);
+            robot.diffyRPos = 0.457;    robot.diffyRServo.setPosition(robot.diffyRPos);
         }
         else if (preset == 3) { // wall intake
             robot.diffyLPos = 0.497; robot.diffyLServo.setPosition(robot.diffyLPos);
@@ -350,10 +350,10 @@ public class AutonomousRight5 extends AutonomousBase {
 
     public void processClaw (boolean open) {
         if (open) {
-            robot.clawServo.setPosition(0.685); //opens claw
+            robot.clawServo.setPosition(0.97); //opens claw
             robot.clawOpen = true;
         } else {
-            robot.clawServo.setPosition(0.562); //closes claw
+            robot.clawServo.setPosition(0.870); //closes claw
             robot.clawOpen = false;
         }
     }
