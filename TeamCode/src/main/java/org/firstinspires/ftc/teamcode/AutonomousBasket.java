@@ -27,13 +27,13 @@ public class AutonomousBasket extends AutonomousBase {
 
         // determines if we print telemetry values during lift operations
         while (!isStarted()) {
-            robot.clawPos = 0.87;
+            robot.clawPos = 0.86;
             // Check for operator input that changes Autonomous options
             captureGamepad1Buttons();
             // Do we need to preload a specimen?
             if (gamepad1_r_bumper_now && !gamepad1_r_bumper_last) {
                 if (robot.clawOpen) { // closes claw
-                    robot.clawPos = 0.870;
+                    robot.clawPos = 0.855;
                     robot.clawOpen = false;
                     robot.clawServo.setPosition(robot.clawPos);
                 } else { // opens claw
@@ -67,9 +67,9 @@ public class AutonomousBasket extends AutonomousBase {
         // collect third intake
         intake3rdSpike();
         done = true;
-        scoreHighBasket();
+        scoreHighBasket(); //on the last score it automatically calls ascent parking :P
 
-        robot.driveTrainMotorsZero();
+        robot.driveTrainMotorsZero(); //make sure were ballin
         sleep(30000000);
 
     } // mainAutonomous
@@ -134,7 +134,7 @@ public class AutonomousBasket extends AutonomousBase {
             robot.clawServo.setPosition(0.97); //opens claw
             robot.clawOpen = true;
         } else {
-            robot.clawServo.setPosition(0.870); //closes claw
+            robot.clawServo.setPosition(0.855); //closes claw
             robot.clawOpen = false;
         }
     }
@@ -151,16 +151,14 @@ public class AutonomousBasket extends AutonomousBase {
         sleep(100);
         processClaw(true);
         sleep(75);
-        if (done) {
-            //processChain(.75, -273, 0);
-            ascentPark();
-        }
-        else {
-            driveToPosition(-25, -6.9, 45, 1, 1, DRIVE_THRU);
-        }
+        driveToPosition(-25, -6.9, 45, 1, 1, DRIVE_THRU);
         robot.slideLMotor.setPower(-1);
         robot.slideRMotor.setPower(-1);
         processWrist(0.497, 0.5, 0);
+        if (done) {
+            sleep(300);
+            ascentPark();
+        }
     } // scoreHighBasket
 
     public void intake1stSpike () {
@@ -174,7 +172,7 @@ public class AutonomousBasket extends AutonomousBase {
         sleep(100);
         processClaw(false);
         sleep(70);
-        processChain(1,-273,0);
+        processChain(1,-265,0);
 
         robot.slideLMotor.setPower(-1);
         robot.slideRMotor.setPower(-1);
@@ -185,7 +183,7 @@ public class AutonomousBasket extends AutonomousBase {
         driveToPosition(-26.65,-13.9, 90,1,1, DRIVE_TO);
         robot.slideLMotor.setPower(0);
         robot.slideRMotor.setPower(0);
-        processChain(1,-200, 50);
+        processChain(1,-180, 50);
         processLift(1100,2,3,0);
         sleep(100);
         processWrist(0.646,0.366,0);
@@ -203,7 +201,7 @@ public class AutonomousBasket extends AutonomousBase {
         driveToPosition(-28.7,-15.7,107.5,1,1, DRIVE_TO);
         robot.slideLMotor.setPower(0);
         robot.slideRMotor.setPower(0);
-        processChain(1,-235, 50);
+        processChain(1,-222, 50);
         processLift(1180,2,3,0);
         sleep(100);
         processWrist(0.666,0.336,0);
@@ -221,7 +219,15 @@ public class AutonomousBasket extends AutonomousBase {
     }
 
     public void ascentPark () {
-        driveToPosition(-25, -6.9, 45, 1, 1, DRIVE_TO);
+        //driveToPosition(-25, -6.9, 45, 1, 1, DRIVE_TO);
+        processClaw(true);
+        processChain(1,-900,0);
+        processWrist(0.214,0.726,0);
+        ascentDrive(0,-50,0,DRIVE_SPEED_100,DRIVE_THRU);
+        ascentDrive(3.2,-52.8,0,DRIVE_SPEED_100,DRIVE_TO);
+
+        processLift(800,2,2,0.2);
+        processChain(1,-870,0);
     }
     //lame navigation functions boooooooo >:(
 

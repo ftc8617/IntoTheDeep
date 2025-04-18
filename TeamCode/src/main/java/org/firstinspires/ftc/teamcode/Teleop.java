@@ -646,15 +646,19 @@ public class Teleop extends LinearOpMode {
             robot.diffyLPos = 0.026; robot.diffyLServo.setPosition(robot.diffyLPos);
             robot.diffyRPos = 0.570; robot.diffyRServo.setPosition(robot.diffyRPos);
         }
+        else if (gamepad2.dpad_down) { //horizontal scoring for basket
+            robot.diffyLPos = 0.060; robot.diffyLServo.setPosition(robot.diffyLPos);
+            robot.diffyRPos = 0.732; robot.diffyRServo.setPosition(robot.diffyRPos);
+        }
         //manual differential rotation
-            if (gamepad2.right_stick_y <= -.25) { //rotate yaw up
+            if (gamepad2.right_stick_y <= -.25) { //rotate yaw up (might be down)
                 if (robot.diffyLPos > .015 && robot.diffyRPos < 0.985) {
                     robot.diffyLPos -= .015 * (-gamepad2.right_stick_y);
                     robot.diffyRPos += .015 * (-gamepad2.right_stick_y);
                 } else {
                     gamepad2.runRumbleEffect(shortRumble);
                 }
-            } else if (gamepad2.right_stick_y >= .25) { //rotate yaw down
+            } else if (gamepad2.right_stick_y >= .25) { //rotate yaw down (might be up)
                 if (robot.diffyLPos < 0.985 && robot.diffyRPos > 0.015) {
                     robot.diffyLPos += -.015 * (-gamepad2.right_stick_y);
                     robot.diffyRPos -= -.015 * (-gamepad2.right_stick_y);
@@ -663,14 +667,14 @@ public class Teleop extends LinearOpMode {
                 }
             }
 
-            if (gamepad2.right_stick_x <= -.25) { //rotate roll right
+            if (gamepad2.right_stick_x <= -.25) { //rotate roll right (might be left)
                 if (robot.diffyLPos < 0.985 && robot.diffyRPos < 0.985) {
                     robot.diffyLPos += .015 * (gamepad2.right_stick_x);
                     robot.diffyRPos += .015 * (gamepad2.right_stick_x);
                 } else {
                     gamepad2.runRumbleEffect(shortRumble);
                 }
-            } else if (gamepad2.right_stick_x >= .25) { //rotate roll left
+            } else if (gamepad2.right_stick_x >= .25) { //rotate roll left (might be right)
                 if (robot.diffyLPos > 0.015 && robot.diffyRPos > 0.015) {
                     robot.diffyLPos -= -.015 * (gamepad2.right_stick_x);
                     robot.diffyRPos -= -.015 * (gamepad2.right_stick_x);
@@ -709,7 +713,7 @@ public class Teleop extends LinearOpMode {
         }
         else
         {
-            robot.clawPos = 0.870;
+            robot.clawPos = 0.855;
             robot.clawServo.setPosition(robot.clawPos);
         }
 

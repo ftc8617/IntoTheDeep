@@ -41,7 +41,7 @@ public class AutonomousRight5 extends AutonomousBase {
             // Do we need to preload a specimen?
             if (gamepad1_r_bumper_now && !gamepad1_r_bumper_last) {
                 if (robot.clawOpen) { // closes claw
-                    robot.clawPos = 0.870;
+                    robot.clawPos = 0.855;
                     robot.clawOpen = false;
                     robot.clawServo.setPosition(robot.clawPos);
                 } else { // opens claw
@@ -126,7 +126,7 @@ public class AutonomousRight5 extends AutonomousBase {
         // Drive toward submersible
         if( opModeIsActive() ) {
             // Start tilting and extending the arm, and positioning the specimen
-            processChain(1, -942, 0);
+            processChain(1, -992, 0);
             // Drive to the scoring position next to the submersible
             driveToPosition( 16.2, (pos_x+2.2), 0.00, DRIVE_SPEED_100, TURN_SPEED_100, DRIVE_THRU );
             processWrist(0.497, 0.516, 0);
@@ -353,7 +353,7 @@ public class AutonomousRight5 extends AutonomousBase {
             robot.clawServo.setPosition(0.97); //opens claw
             robot.clawOpen = true;
         } else {
-            robot.clawServo.setPosition(0.870); //closes claw
+            robot.clawServo.setPosition(0.855); //closes claw
             robot.clawOpen = false;
         }
     }

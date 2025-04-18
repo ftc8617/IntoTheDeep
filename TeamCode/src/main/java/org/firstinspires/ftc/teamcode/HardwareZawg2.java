@@ -95,7 +95,7 @@ public class HardwareZawg2
     public Servo diffyLServo = null;
     public Servo diffyRServo = null;
 
-    public double  clawPos   = 0.870;
+    public double  clawPos   = 0.855;
     public double  diffyLPos = 0.077;
     public double  diffyRPos = 0.863;
     public boolean clawOpen = false; 
@@ -225,7 +225,7 @@ public class HardwareZawg2
     /*--------------------------------------------------------------------------------------------*/
     public void resetEncoders() {
         odom.resetPosAndIMU();
-        clawPos   = 0.87;     clawServo.setPosition(clawPos);
+        clawPos   = 0.855;     clawServo.setPosition(clawPos);
        diffyLPos = 0.114;    diffyLServo.setPosition(diffyLPos);
        diffyRPos = 0.884;    diffyRServo.setPosition(diffyRPos);
        clawOpen = false;
